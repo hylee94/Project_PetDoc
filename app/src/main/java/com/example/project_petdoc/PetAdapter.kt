@@ -1,4 +1,4 @@
-package com.example.animalhospital
+package com.example.project_petdoc
 
 import Pet
 import android.view.LayoutInflater
