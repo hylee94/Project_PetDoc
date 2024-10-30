@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 포커스된 상태 -->
+    <item android:drawable="@drawable/rounded_edit_text_focused" android:state_focused="true"/>
+    <!-- 비포커스 상태 -->
+    <item android:drawable="@drawable/rounded_edit_text_unfocused" />
+</selector>
