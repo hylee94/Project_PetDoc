@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.animalhospital.databinding.PetsMainBinding
+import com.example.project_petdoc.databinding.PetsMainBinding
 
 
 class PetActivity : AppCompatActivity() {
