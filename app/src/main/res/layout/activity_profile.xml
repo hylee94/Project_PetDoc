@@ -6,44 +6,6 @@
     android:layout_height="match_parent"
     android:background="#F0F0F0">
 
-
-    <LinearLayout
-        android:id="@+id/topBarLayout"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:background="#A276F7"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <!-- Back Button -->
-
-        <!-- Profile Text -->
-        <ImageView
-            android:id="@+id/backButton"
-            android:layout_width="24dp"
-            android:layout_height="20dp"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="Back"
-            android:src="@drawable/back"
-            app:tint="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/profileText"
-            android:layout_width="218dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:text="Profile"
-            android:textColor="#FFFFFF"
-            android:textSize="24sp" />
-    </LinearLayout>
-
     <ImageView
         android:id="@+id/profileImageView"
         android:layout_width="120dp"
@@ -51,10 +13,11 @@
         android:elevation="4dp"
         android:scaleType="centerCrop"
         android:src="@drawable/user_basic"
-        app:layout_constraintTop_toBottomOf="@id/topBarLayout"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="-60dp" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="135dp"
+        tools:ignore="MissingConstraints" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -64,73 +27,87 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileImageView">
+        app:layout_constraintTop_toBottomOf="@id/profileImageView"/>
 
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:src="@drawable/edit"
-            app:tint="#000000" />
-
-        <TextView
-            android:id="@+id/userNameTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:fontFamily="sans-serif-medium"
-            android:text="홍길동"
-            android:textColor="#000000"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <!-- Buttons for Personal Info Edit and Pet Management -->
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/userNameTextView"
-        app:layout_constraintStart_toStartOf="parent"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="579dp"
+        android:layout_height="361dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        tools:ignore="NotSibling">
+        app:layout_constraintHorizontal_bias="0.553"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/qhfkqhfk" />
 
-    </LinearLayout>
-
-    <!-- Delete Account Button -->
     <TextView
         android:id="@+id/deleteAccountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
         android:text="회원 탈퇴"
         android:textColor="#A276F7"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/managePetButton"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/managePetButton" />
 
     <Button
         android:id="@+id/managePetButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="23dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
         android:backgroundTint="#FFFFFF"
         android:text="Pet 관리"
         android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@+id/editPersonalInfoButton"
-        tools:layout_editor_absoluteX="21dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editPersonalInfoButton" />
 
     <Button
         android:id="@+id/editPersonalInfoButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="176dp"
+        android:layout_marginEnd="24dp"
         android:backgroundTint="#FFFFFF"
         android:text="개인정보 수정"
         android:textColor="#000000"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_weight="1"
+        android:text="PROFILE"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:textSize="45sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="53dp"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:gravity="center"
+        android:text="홍길동"
+        android:textSize="24sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
