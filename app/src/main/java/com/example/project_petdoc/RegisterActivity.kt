@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.animalhospital.databinding.PetsSumBinding
+import com.example.project_petdoc.databinding.PetsSumBinding
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: PetsSumBinding
