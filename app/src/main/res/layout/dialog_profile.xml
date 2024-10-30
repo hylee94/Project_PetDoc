@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="개인정보 수정"
+        android:textSize="18sp"
+        android:textColor="#000000"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp" />
+
+    <EditText
+        android:id="@+id/editEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="example@email.com"
+        android:inputType="textEmailAddress"
+        android:textColorHint="#888888"
+        android:padding="8dp"
+        android:backgroundTint="#A276F7" />
+
+    <EditText
+        android:id="@+id/editPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="새로운 비밀번호 입력"
+        android:inputType="textPassword"
+        android:textColorHint="#888888"
+        android:padding="8dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#A276F7" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="20dp">
+
+        <Button
+            android:id="@+id/cancelButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="취소"
+            android:textColor="#A276F7"
+            android:backgroundTint="#FFFFFF" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="수정"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#A276F7"
+            android:layout_marginStart="8dp" />
+    </LinearLayout>
+
+</LinearLayout>
