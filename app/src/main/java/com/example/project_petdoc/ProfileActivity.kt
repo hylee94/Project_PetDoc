@@ -16,15 +16,15 @@ class ProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        val backButton = findViewById<ImageView>(R.id.backButton)
+      //  val backButton = findViewById<ImageView>(R.id.backButton)
         val editPersonalInfoButton = findViewById<Button>(R.id.editPersonalInfoButton)
         val managePetButton = findViewById<Button>(R.id.managePetButton)
         val deleteAccountTextView = findViewById<TextView>(R.id.deleteAccountTextView)
 
-        // 백 버튼 클릭 시 현재 액티비티 종료
-        backButton.setOnClickListener {
-            finish() // 현재 액티비티 종료하고 이전 화면으로 돌아감
-        }
+//        // 백 버튼 클릭 시 현재 액티비티 종료
+//        backButton.setOnClickListener {
+//            finish() // 현재 액티비티 종료하고 이전 화면으로 돌아감
+//        }
 
         editPersonalInfoButton.setOnClickListener {
             showEditPersonalInfoDialog()
