@@ -1,6 +1,5 @@
-package com.example.project_petdoc
+package com.example.project_petdoc.pets
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
