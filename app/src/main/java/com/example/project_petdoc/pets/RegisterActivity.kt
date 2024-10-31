@@ -21,14 +21,14 @@ class RegisterActivity : AppCompatActivity() {
 
         // 등록 버튼 클릭 시 데이터 전송
         binding.btnSign.setOnClickListener {
-            val type = binding.editCategory.text.toString().trim()
+            val type = binding.editType.text.toString().trim()
             val name = binding.editName.text.toString().trim()
             val gender = binding.editS.text.toString().trim()
             val age = binding.editAge.text.toString().trim()
             val hospital = binding.editHos.text.toString().trim()
 
             if (type.isEmpty()) {
-                binding.editCategory.error = "동물 종류를 입력해주세요"
+                binding.editType.error = "동물 종류를 입력해주세요"
             } else if (name.isEmpty()) {
                 binding.editName.error = "이름을 입력해주세요"
             } else if (gender.isEmpty()) {
