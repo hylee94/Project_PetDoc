@@ -57,13 +57,17 @@ class PetsActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
                 result.data!!.let { data ->
+                    val petid = data.getStringExtra("petid") ?: "default_petid" // 기본값 설정
+                    val memberid = data.getStringExtra("memberid") ?: "default_memberid" // 기본값 설정
                     val type = data.getStringExtra("type")
                     val name = data.getStringExtra("name")
                     val gender = data.getStringExtra("gender")
-                    val age = data.getStringExtra("age")
+                    val ageString = data.getStringExtra("age")?.replace("살", "") // 숫자만 추출
+                    val age = ageString?.toIntOrNull() ?: 0 // 나이를 Int로 변환
+
                     val hospital = data.getStringExtra("hospital")
 
-                    petList.add(Pet(type, name, gender, age, hospital))
+                    petList.add(Pet(petid, memberid, type, name, gender, age, hospital))
                     petAdapter.notifyDataSetChanged()
                 }
             }
