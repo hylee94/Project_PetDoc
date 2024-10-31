@@ -32,7 +32,7 @@ class ProfileActivity : AppCompatActivity() {
 
         managePetButton.setOnClickListener {
             Toast.makeText(this, "Manage Pets", Toast.LENGTH_SHORT).show()
-            // Navigate to com.example.project_petdoc.pets.Pet Management screen
+            // Navigate to com.example.project_petdoc.dataclass.Pet Management screen
         }
 
         deleteAccountTextView.setOnClickListener {

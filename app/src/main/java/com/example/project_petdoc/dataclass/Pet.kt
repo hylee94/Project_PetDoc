@@ -1,4 +1,4 @@
-package com.example.project_petdoc.pets
+package com.example.project_petdoc.dataclass
 
 data class Pet(
     val category: String?,

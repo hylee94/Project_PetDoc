@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_petdoc.databinding.PetsListBinding
+import com.example.project_petdoc.dataclass.Pet
 
 
 class PetsActivity : AppCompatActivity() {
