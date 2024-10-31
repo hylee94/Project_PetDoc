@@ -9,11 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_petdoc.databinding.PetsMainBinding
+import com.example.project_petdoc.databinding.PetsListBinding
 
 
 class PetActivity : AppCompatActivity() {
-    val binding by lazy { PetsMainBinding.inflate(layoutInflater) }
+    val binding by lazy { PetsListBinding.inflate(layoutInflater) }
     val petList = ArrayList<Pet>()
     val petAdapter = PetAdapter(petList)
 
@@ -23,7 +23,7 @@ class PetActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Edge-to-Edge 패딩 설정
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.PetsList) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
