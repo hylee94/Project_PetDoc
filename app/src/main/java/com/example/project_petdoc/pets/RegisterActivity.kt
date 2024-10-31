@@ -1,6 +1,5 @@
-package com.example.project_petdoc
+package com.example.project_petdoc.pets
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,7 @@ class RegisterActivity : AppCompatActivity() {
                 putExtra("category", binding.editCategory.text.toString())
                 putExtra("name", binding.editName.text.toString())
                 putExtra("gender", binding.editS.text.toString())
-                putExtra("age", binding.editAge.text.toString().toInt()) // String을 Int로 변환
+                putExtra("age", binding.editAge.text.toString())
                 putExtra("hospital", binding.editHos.text.toString())
             }
             setResult(RESULT_OK, intent)

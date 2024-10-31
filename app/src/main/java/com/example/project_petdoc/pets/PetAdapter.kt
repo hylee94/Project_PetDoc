@@ -1,6 +1,5 @@
-package com.example.project_petdoc
+package com.example.project_petdoc.pets
 
-import Pet
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +12,7 @@ class PetAdapter(private val petList: List<Pet>) : RecyclerView.Adapter<PetAdapt
             binding.textViewCategory.text = pet.category
             binding.textViewName.text = pet.name
             binding.textViewGender.text = pet.gender
-            binding.textViewAge.text = pet.age.toString()
+            binding.textViewAge.text = pet.age
             binding.textViewHospital.text = pet.hospital
         }
     }

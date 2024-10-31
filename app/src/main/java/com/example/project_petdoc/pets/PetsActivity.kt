@@ -1,6 +1,5 @@
-package com.example.project_petdoc
+package com.example.project_petdoc.pets
 
-import Pet
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -9,11 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_petdoc.databinding.PetsMainBinding
+import com.example.project_petdoc.databinding.PetsListBinding
 
 
-class PetActivity : AppCompatActivity() {
-    val binding by lazy { PetsMainBinding.inflate(layoutInflater) }
+class PetsActivity : AppCompatActivity() {
+    val binding by lazy { PetsListBinding.inflate(layoutInflater) }
     val petList = ArrayList<Pet>()
     val petAdapter = PetAdapter(petList)
 
@@ -23,7 +22,7 @@ class PetActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Edge-to-Edge 패딩 설정
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.PetsList) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -53,14 +52,15 @@ class PetActivity : AppCompatActivity() {
                     val category = data.getStringExtra("category")
                     val name = data.getStringExtra("name")
                     val gender = data.getStringExtra("gender")
-                    val ageString = data.getStringExtra("age") // String으로 가져옴
+                    val age = data.getStringExtra("age")
                     val hospital = data.getStringExtra("hospital")
-
-                    val age = ageString?.toIntOrNull() // 변환 실패 시 null이 될 수 있음
 
                     petList.add(Pet(category, name, gender, age, hospital))
                     petAdapter.notifyDataSetChanged()
                 }
             }
         }
+
+
+
 }

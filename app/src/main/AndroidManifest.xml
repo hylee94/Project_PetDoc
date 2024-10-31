@@ -14,10 +14,10 @@
         android:theme="@style/Theme.Project_PetDoc"
         tools:targetApi="31">
         <activity
-            android:name=".InputActivity"
+            android:name=".Member.InputActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Member.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".PetActivity"
+            android:name=".pets.PetsActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,7 +42,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".pets.RegisterActivity"/>
     </application>
 
 </manifest>
