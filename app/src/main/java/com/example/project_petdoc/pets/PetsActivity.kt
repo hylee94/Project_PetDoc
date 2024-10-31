@@ -26,11 +26,11 @@ class PetsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Edge-to-Edge 패딩 설정
-//        ViewCompat.setOnApplyWindowInsetsListener(binding.PetsList) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-//        }
+        ViewCompat.setOnApplyWindowInsetsListener(binding.PetsList) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         val btnLogout = findViewById<Button>(R.id.btnLogout)
 
