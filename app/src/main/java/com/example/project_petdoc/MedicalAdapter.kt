@@ -47,3 +47,4 @@ class MedicalAdapter(
         return medicalList.size
     }
 }
+

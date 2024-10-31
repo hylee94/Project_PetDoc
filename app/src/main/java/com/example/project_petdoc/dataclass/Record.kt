@@ -10,4 +10,5 @@ data class Record(val no:Int,
                   val medicine:String,
                   val fee:String,
                   val hospital:String,
-                  val memo:String)
+                  val memo:String
+)
