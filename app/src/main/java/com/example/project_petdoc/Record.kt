@@ -70,4 +70,6 @@ class Record : AppCompatActivity() {
             .show()
     }
 }
+
+
 //테스트
