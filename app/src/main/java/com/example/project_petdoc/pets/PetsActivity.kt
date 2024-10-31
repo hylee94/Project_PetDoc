@@ -3,6 +3,7 @@ package com.example.project_petdoc.pets
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_petdoc.Member.MainActivity
+import com.example.project_petdoc.ProfileActivity
 import com.example.project_petdoc.R
 import com.example.project_petdoc.databinding.PetsListBinding
 import com.example.project_petdoc.dataclass.Pet
@@ -30,6 +32,12 @@ class PetsActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        val btnProfile = findViewById<ImageView>(R.id.btnProfile)
+        btnProfile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
         }
 
         val btnLogout = findViewById<Button>(R.id.btnLogout)
