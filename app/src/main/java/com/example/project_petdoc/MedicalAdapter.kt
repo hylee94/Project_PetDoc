@@ -3,7 +3,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_petdoc.databinding.ItemMedicalBinding
-import com.example.teamproject.Medical
+import com.example.project_petdoc.dataclass.Medical
 import com.example.teamproject.RecordActivity2
 
 class MedicalAdapter(
@@ -25,14 +25,14 @@ class MedicalAdapter(
         val medical = medicalList[position]
         holder.binding.diseaseText.text = medical.disease
         holder.binding.dateText.text = medical.date
-        holder.binding.opinionText.text = medical.opinion
+        holder.binding.opinionText.text = medical.doctor_op
 
         // 항목 클릭 시 상세 보기 화면으로 이동
         holder.itemView.setOnClickListener {
             val intent = Intent(holder.itemView.context, RecordActivity2::class.java).apply {
                 putExtra("date", medical.date)
                 putExtra("disease", medical.disease)
-                putExtra("opinion", medical.opinion)
+                putExtra("opinion", medical.doctor_op)
                 putExtra("prescription", "처방 정보") // 필요시 추가
                 putExtra("fee", "병원비 정보")
                 putExtra("hospital", "병원명 정보")
@@ -47,3 +47,4 @@ class MedicalAdapter(
         return medicalList.size
     }
 }
+
