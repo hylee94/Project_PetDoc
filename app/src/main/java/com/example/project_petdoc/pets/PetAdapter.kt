@@ -10,7 +10,7 @@ class PetAdapter(private val petList: List<Pet>) : RecyclerView.Adapter<PetAdapt
 
     inner class PetViewHolder(private val binding: ItemPetBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(pet: Pet) {
-            binding.textViewCategory.text = pet.category
+            binding.textViewCategory.text = pet.type
             binding.textViewName.text = pet.name
             binding.textViewGender.text = pet.gender
             binding.textViewAge.text = pet.age

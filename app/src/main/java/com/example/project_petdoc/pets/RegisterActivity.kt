@@ -15,15 +15,19 @@ class RegisterActivity : AppCompatActivity() {
         binding = PetsSumBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.petback.setOnClickListener {
+            finish()
+        }
+
         // 등록 버튼 클릭 시 데이터 전송
         binding.btnSign.setOnClickListener {
-            val category = binding.editCategory.text.toString().trim()
+            val type = binding.editCategory.text.toString().trim()
             val name = binding.editName.text.toString().trim()
             val gender = binding.editS.text.toString().trim()
             val age = binding.editAge.text.toString().trim()
             val hospital = binding.editHos.text.toString().trim()
 
-            if (category.isEmpty()) {
+            if (type.isEmpty()) {
                 binding.editCategory.error = "동물 종류를 입력해주세요"
             } else if (name.isEmpty()) {
                 binding.editName.error = "이름을 입력해주세요"
@@ -39,7 +43,7 @@ class RegisterActivity : AppCompatActivity() {
                 binding.editHos.error = "종 구분 입력해주세요"
             } else {
                 val intent = Intent().apply {
-                    putExtra("category", category)
+                    putExtra("type", type)
                     putExtra("name", name)
                     putExtra("gender", gender)
                     putExtra("age", age)
