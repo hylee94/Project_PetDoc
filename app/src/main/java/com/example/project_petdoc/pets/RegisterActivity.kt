@@ -15,6 +15,10 @@ class RegisterActivity : AppCompatActivity() {
         binding = PetsSumBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.petback.setOnClickListener {
+            finish()
+        }
+
         // 등록 버튼 클릭 시 데이터 전송
         binding.btnSign.setOnClickListener {
             val category = binding.editCategory.text.toString().trim()
