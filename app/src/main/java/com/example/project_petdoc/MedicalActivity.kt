@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_petdoc.databinding.ActivityMedicalBinding
+import com.example.project_petdoc.dataclass.Medical
 
 class MedicalActivity : AppCompatActivity() {
 
