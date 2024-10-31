@@ -53,10 +53,8 @@ class PetActivity : AppCompatActivity() {
                     val category = data.getStringExtra("category")
                     val name = data.getStringExtra("name")
                     val gender = data.getStringExtra("gender")
-                    val ageString = data.getStringExtra("age") // String으로 가져옴
+                    val age = data.getStringExtra("age")
                     val hospital = data.getStringExtra("hospital")
-
-                    val age = ageString?.toIntOrNull() // 변환 실패 시 null이 될 수 있음
 
                     petList.add(Pet(category, name, gender, age, hospital))
                     petAdapter.notifyDataSetChanged()
