@@ -54,8 +54,8 @@
     </androidx.cardview.widget.CardView>
 
 
-<EditText
-        android:id="@+id/edt1"
+    <EditText
+        android:id="@+id/edtDate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -70,7 +70,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
-        android:id="@+id/edt2"
+        android:id="@+id/edtDisease"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -82,10 +82,10 @@
         android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt1" />
+        app:layout_constraintTop_toBottomOf="@+id/edtDate" />
 
     <EditText
-        android:id="@+id/edt3"
+        android:id="@+id/edtOpinion"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="40dp"
@@ -97,10 +97,10 @@
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt2" />
+        app:layout_constraintTop_toBottomOf="@+id/edtDisease" />
 
     <EditText
-        android:id="@+id/edt4"
+        android:id="@+id/edtPrescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -112,10 +112,10 @@
         android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt3" />
+        app:layout_constraintTop_toBottomOf="@+id/edtOpinion" />
 
     <EditText
-        android:id="@+id/edt5"
+        android:id="@+id/edtFee"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -127,10 +127,10 @@
         android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt4" />
+        app:layout_constraintTop_toBottomOf="@+id/edtPrescription" />
 
     <EditText
-        android:id="@+id/edt6"
+        android:id="@+id/edtHospital"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -142,10 +142,10 @@
         android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt5" />
+        app:layout_constraintTop_toBottomOf="@+id/edtFee" />
 
     <EditText
-        android:id="@+id/edt7"
+        android:id="@+id/edtMemo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
@@ -157,7 +157,7 @@
         android:background="@drawable/rounded_edit_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edt6" />
+        app:layout_constraintTop_toBottomOf="@+id/edtHospital" />
 
     <Button
         android:id="@+id/btnSave"
