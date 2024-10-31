@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_petdoc.databinding.ActivityMedicalBinding
+import com.example.project_petdoc.dataclass.Medical
 
 class MedicalActivity : AppCompatActivity() {
 
@@ -51,7 +52,7 @@ class MedicalActivity : AppCompatActivity() {
             val intent = Intent(this, RecordActivity2::class.java).apply {
                 putExtra("date", selectedMedical.date)
                 putExtra("disease", selectedMedical.disease)
-                putExtra("opinion", selectedMedical.opinion)
+                putExtra("opinion", selectedMedical.doctor_op)
                 // 필요시 Record2Activity에 추가적인 정보 전달
             }
             startActivity(intent)
@@ -67,3 +68,4 @@ class MedicalActivity : AppCompatActivity() {
         }
     }
 }
+
