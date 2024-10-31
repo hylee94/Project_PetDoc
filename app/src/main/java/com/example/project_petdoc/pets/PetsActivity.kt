@@ -2,12 +2,15 @@ package com.example.project_petdoc.pets
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_petdoc.Member.MainActivity
+import com.example.project_petdoc.R
 import com.example.project_petdoc.databinding.PetsListBinding
 import com.example.project_petdoc.dataclass.Pet
 
@@ -23,10 +26,19 @@ class PetsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // Edge-to-Edge 패딩 설정
-        ViewCompat.setOnApplyWindowInsetsListener(binding.PetsList) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+//        ViewCompat.setOnApplyWindowInsetsListener(binding.PetsList) { v, insets ->
+//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+//            insets
+//        }
+
+        val btnLogout = findViewById<Button>(R.id.btnLogout)
+
+        btnLogout.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
 
         // RecyclerView 초기화
@@ -37,11 +49,6 @@ class PetsActivity : AppCompatActivity() {
         binding.btnSign.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             registerActivityResultLauncher.launch(intent)
-        }
-
-        // 메인 화면으로 돌아가는 ImageView 클릭 시 액션
-        binding.imageView2.setOnClickListener {
-
         }
     }
 
@@ -61,7 +68,4 @@ class PetsActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
 }
