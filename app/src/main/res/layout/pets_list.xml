@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/mypage"
+        android:id="@+id/btnProfile"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:layout_marginTop="32dp"
