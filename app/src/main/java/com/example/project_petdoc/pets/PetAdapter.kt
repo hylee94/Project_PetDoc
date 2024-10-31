@@ -1,6 +1,5 @@
-package com.example.project_petdoc
+package com.example.project_petdoc.pets
 
-import Pet
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

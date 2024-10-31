@@ -1,6 +1,5 @@
-package com.example.project_petdoc
+package com.example.project_petdoc.pets
 
-import Pet
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -9,10 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_petdoc.RegisterActivity
 import com.example.project_petdoc.databinding.PetsListBinding
 
 
-class PetActivity : AppCompatActivity() {
+class PetsActivity : AppCompatActivity() {
     val binding by lazy { PetsListBinding.inflate(layoutInflater) }
     val petList = ArrayList<Pet>()
     val petAdapter = PetAdapter(petList)
@@ -61,4 +61,7 @@ class PetActivity : AppCompatActivity() {
                 }
             }
         }
+
+
+
 }
