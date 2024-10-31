@@ -51,7 +51,7 @@ class MedicalActivity : AppCompatActivity() {
             val intent = Intent(this, RecordActivity2::class.java).apply {
                 putExtra("date", selectedMedical.date)
                 putExtra("disease", selectedMedical.disease)
-                putExtra("opinion", selectedMedical.opinion)
+                putExtra("opinion", selectedMedical.doctor_op)
                 // 필요시 Record2Activity에 추가적인 정보 전달
             }
             startActivity(intent)
