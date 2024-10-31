@@ -1,4 +1,4 @@
-package com.example.teamproject
+package com.example.project_petdoc.dataclass
 
 data class Medical(
     val disease: String,
