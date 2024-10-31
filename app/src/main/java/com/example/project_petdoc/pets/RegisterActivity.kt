@@ -2,6 +2,7 @@ package com.example.project_petdoc.pets
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project_petdoc.databinding.PetsSumBinding
 
@@ -16,15 +17,45 @@ class RegisterActivity : AppCompatActivity() {
 
         // 등록 버튼 클릭 시 데이터 전송
         binding.btnSign.setOnClickListener {
-            val intent = Intent().apply {
-                putExtra("category", binding.editCategory.text.toString())
-                putExtra("name", binding.editName.text.toString())
-                putExtra("gender", binding.editS.text.toString())
-                putExtra("age", binding.editAge.text.toString())
-                putExtra("hospital", binding.editHos.text.toString())
+            val category = binding.editCategory.text.toString().trim()
+            val name = binding.editName.text.toString().trim()
+            val gender = binding.editS.text.toString().trim()
+            val age = binding.editAge.text.toString().trim()
+            val hospital = binding.editHos.text.toString().trim()
+
+            if (category.isEmpty()) {
+                binding.editCategory.error = "동물 종류를 입력해주세요"
+            } else if (name.isEmpty()) {
+                binding.editName.error = "이름을 입력해주세요"
+            } else if (gender.isEmpty()) {
+                binding.editS.error = "성별을 입력해주세요"
+            } else if (gender != "남" && gender != "여") {
+                binding.editS.error = "성별은 '남' 또는 '여'만 입력 가능합니다"
+            } else if (age.isEmpty()) {
+                binding.editAge.error = "나이를 입력해주세요"
+            } else if (!age.matches(Regex("^[0-9]+살$"))) {
+                binding.editAge.error = "ex)3살 이렇게 입력해주세요"
+            } else if (hospital.isEmpty()) {
+                binding.editHos.error = "종 구분 입력해주세요"
+            } else {
+                val intent = Intent().apply {
+                    putExtra("category", category)
+                    putExtra("name", name)
+                    putExtra("gender", gender)
+                    putExtra("age", age)
+                    putExtra("hospital", hospital)
+                }
+                AlertDialog.Builder(this)
+                    .setTitle("등록 확인")
+                    .setMessage("입력하신 내용을 등록하시겠습니까?")
+                    .setPositiveButton("확인") { _, _ ->
+                        setResult(RESULT_OK, intent)
+                        finish()
+                    }
+                    .setNegativeButton("취소", null)
+                    .show()
             }
-            setResult(RESULT_OK, intent)
-            finish() // RegisterActivity 종료
+
         }
     }
 }

@@ -41,7 +41,7 @@ class PetsActivity : AppCompatActivity() {
 
         // 메인 화면으로 돌아가는 ImageView 클릭 시 액션
         binding.imageView2.setOnClickListener {
-            // 메인 화면 기능 추가 (필요한 경우)
+
         }
     }
 
@@ -49,7 +49,7 @@ class PetsActivity : AppCompatActivity() {
     private val registerActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
-                result.data?.let { data ->
+                result.data!!.let { data ->
                     val category = data.getStringExtra("category")
                     val name = data.getStringExtra("name")
                     val gender = data.getStringExtra("gender")
