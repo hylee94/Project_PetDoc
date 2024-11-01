@@ -54,11 +54,18 @@ class InputActivity : AppCompatActivity() {
         val call = MemberClient.retrofit.insert(member)
         call.enqueue(object : Callback<Member>{
             override fun onResponse(call: Call<Member>, response: Response<Member>) {
-                if (response.isSuccessful) {
-                    Toast.makeText(this@InputActivity, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                    finish()
-            }else {
-                    Toast.makeText(this@InputActivity, "회원가입 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                when{
+                    response.isSuccessful -> {
+                        Toast.makeText(this@InputActivity, "회원가입이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                    response.code() == 409 -> {
+                        // HTTP 409 Conflict 상태인 경우 - 중복된 ID
+                        Toast.makeText(this@InputActivity, "아이디가 중복입니다.", Toast.LENGTH_SHORT).show()
+                }
+                    else -> {
+                        Toast.makeText(this@InputActivity, "회원가입 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
 
