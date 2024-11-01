@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.project_petdoc.Member.MainActivity
 import com.example.project_petdoc.client.MemberClient
 import com.example.project_petdoc.databinding.DialogProfileBinding
 import com.example.project_petdoc.pets.PetsActivity
@@ -110,7 +111,8 @@ class ProfileActivity : AppCompatActivity() {
                         override fun onResponse(call: Call<Void>, response: Response<Void>) {
                             if (response.isSuccessful) {
                                 Toast.makeText(this@ProfileActivity, "회원탈퇴 성공", Toast.LENGTH_SHORT).show()
-                                finish()
+                                val intent = Intent(this@ProfileActivity, MainActivity::class.java)
+                                startActivity(intent)
                             } else {
                                 Toast.makeText(this@ProfileActivity, "회원탈퇴 실패: ${response.message()}" , Toast.LENGTH_SHORT).show()
                             }
