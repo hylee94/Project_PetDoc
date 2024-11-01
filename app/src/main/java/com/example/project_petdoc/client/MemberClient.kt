@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object MemberClient {
     val retrofit:MemberInterface = Retrofit.Builder()
-        .baseUrl("http://10.100.103.31:8899/member/")
+        .baseUrl("http://10.100.103.41:8899/member/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(MemberInterface::class.java)

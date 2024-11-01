@@ -11,8 +11,13 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.project_petdoc.client.MemberClient
 import com.example.project_petdoc.databinding.DialogProfileBinding
+import com.example.project_petdoc.dataclass.Member
 import com.example.project_petdoc.pets.PetsActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileActivity : AppCompatActivity() {
 
@@ -22,7 +27,7 @@ class ProfileActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
 
-      //  val backButton = findViewById<ImageView>(R.id.backButton)
+        //  val backButton = findViewById<ImageView>(R.id.backButton)
         val editPersonalInfoButton = findViewById<Button>(R.id.editPersonalInfoButton)
         val managePetButton = findViewById<Button>(R.id.managePetButton)
         val deleteAccountButton = findViewById<TextView>(R.id.deleteAccountButton)
@@ -71,19 +76,35 @@ class ProfileActivity : AppCompatActivity() {
             val newPassword = binding.editPassword.text.toString()
 
             if (email.isNotBlank() && newPassword.isNotBlank()) {
-                val editor = sharedPreferences.edit()
-                editor.putString("userEmail", email)
-                editor.putString("userPassword", newPassword) // 비밀번호도 저장
-                editor.apply()
+                val updatedMember = Member(id = id, email = email, password = newPassword)
 
-                Toast.makeText(this, "개인 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
-                alertDialog.dismiss()
+                // 서버로 업데이트 요청
+                MemberClient.retrofit.update(updatedMember, id).enqueue(object :
+                    Callback<Member> {
+                    override fun onResponse(call: Call<Member>, response: Response<Member>) {
+                        if (response.isSuccessful) {
+                            val editor = sharedPreferences.edit()
+                            editor.putString("userId", id)
+                            editor.putString("userEmail", email)
+                            editor.putString("userPassword", newPassword)
+                            editor.apply()
+
+                            Toast.makeText(this@ProfileActivity, "개인 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                            alertDialog.dismiss()
+                        } else {
+                            Toast.makeText(this@ProfileActivity, "수정 실패: ${response.message()}", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Member>, t: Throwable) {
+                        Toast.makeText(this@ProfileActivity, "오류 발생: ${t.message}", Toast.LENGTH_SHORT).show()
+                    }
+                })
             } else {
                 Toast.makeText(this, "모든 필드를 입력해 주세요", Toast.LENGTH_SHORT).show()
             }
         }
 
-        // "취소" 버튼 클릭 리스너
         binding.cancelButton.setOnClickListener {
             alertDialog.dismiss()
         }

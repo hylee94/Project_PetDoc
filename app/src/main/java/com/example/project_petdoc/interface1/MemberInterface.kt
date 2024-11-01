@@ -21,7 +21,7 @@ interface MemberInterface {
 
     //수정
     @PUT("update/{id}")
-    fun update(@Body member: Member, @Path("id") id:String):Call<Member>
+    fun update(@Body member: Member, @Path("id") id: String): Call<Member>
 
     //삭제
     @DELETE("delete/{id}")
