@@ -16,6 +16,8 @@ import com.example.project_petdoc.R
 import com.example.project_petdoc.databinding.PetsListBinding
 import com.example.project_petdoc.dataclass.Member
 import com.example.project_petdoc.dataclass.Pet
+import retrofit2.Call
+import retrofit2.Response
 
 
 class PetsActivity : AppCompatActivity() {
@@ -59,6 +61,17 @@ class PetsActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             registerActivityResultLauncher.launch(intent)
         }
+        PetClient.retrofit.findAll().enqueue(object : retrofit2.Callback<List<Pet>>{
+            override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
+                petAdapter.petList =response.body() as MutableList<Pet>
+                petAdapter.notifyDataSetChanged()
+            }
+
+            override fun onFailure(call: Call<List<Pet>>, t: Throwable) {
+
+            }
+
+        })
     }
 
     // 등록된 데이터를 받아서 RecyclerView에 추가하는 launcher 설정
