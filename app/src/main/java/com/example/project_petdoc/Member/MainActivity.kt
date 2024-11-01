@@ -56,8 +56,9 @@ class MainActivity : AppCompatActivity() {
                             // 로그인 상태 저장
                             saveLoginStatus(true)
 
-                            //로그인한 사용자 ID 저장
-                            val userId = response.body()?.id //서버에서 받은 사용자 ID 가져오기
+                            response.body()?.let { memberInfo ->
+                                saveUserCredentials(memberInfo.id, memberInfo.email, memberInfo.password )
+                            }
 
                             // 다음 화면으로 이동하는 코드 추가
                             val intent = Intent(this@MainActivity, PetsActivity::class.java)
@@ -82,6 +83,14 @@ class MainActivity : AppCompatActivity() {
     private fun saveLoginStatus(isLoggedIn: Boolean) {
         val editor = shared.edit()
         editor.putBoolean("isLoggedIn", isLoggedIn)
+        editor.apply()
+    }
+
+    private fun saveUserCredentials(id: String, email: String, password: String) {
+        val editor = shared.edit()
+        editor.putString("userId", id)
+        editor.putString("userEmail", email)
+        editor.putString("userPassword", password)
         editor.apply()
     }
 
