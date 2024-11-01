@@ -33,7 +33,7 @@ class RegisterActivity : AppCompatActivity() {
 
             // 유효성 검사
             if (type.isEmpty()) {
-                binding.editType.error = "동물 종류를 입력해주세요"
+                binding.editType.error = "종을 입력해주세요"
             } else if (name.isEmpty()) {
                 binding.editName.error = "이름을 입력해주세요"
             } else if (gender.isEmpty()) {

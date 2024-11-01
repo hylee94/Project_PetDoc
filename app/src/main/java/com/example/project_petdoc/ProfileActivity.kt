@@ -1,43 +1,49 @@
 package com.example.project_petdoc
 
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project_petdoc.databinding.DialogProfileBinding
+import com.example.project_petdoc.pets.PetsActivity
 
 class ProfileActivity : AppCompatActivity() {
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
 
       //  val backButton = findViewById<ImageView>(R.id.backButton)
         val editPersonalInfoButton = findViewById<Button>(R.id.editPersonalInfoButton)
         val managePetButton = findViewById<Button>(R.id.managePetButton)
-        val deleteAccountTextView = findViewById<TextView>(R.id.deleteAccountTextView)
+        val deleteAccountButton = findViewById<TextView>(R.id.deleteAccountButton)
+        val btnProfileBack = findViewById<ImageView>(R.id.btnProfileBack)
 
-//        // 백 버튼 클릭 시 현재 액티비티 종료
-//        backButton.setOnClickListener {
-//            finish() // 현재 액티비티 종료하고 이전 화면으로 돌아감
-//        }
 
         editPersonalInfoButton.setOnClickListener {
             showEditPersonalInfoDialog()
         }
 
         managePetButton.setOnClickListener {
-            Toast.makeText(this, "Manage Pets", Toast.LENGTH_SHORT).show()
-            // Navigate to com.example.project_petdoc.dataclass.Pet Management screen
+            val intent = Intent(this, PetsActivity::class.java)
+            startActivity(intent)
         }
 
-        deleteAccountTextView.setOnClickListener {
+        deleteAccountButton.setOnClickListener {
             Toast.makeText(this, "Delete Account", Toast.LENGTH_SHORT).show()
-            // Implement account deletion functionality here
+        }
+
+        btnProfileBack.setOnClickListener {
+            finish()
         }
     }
 

@@ -3,10 +3,15 @@ package com.example.teamproject
 import MedicalAdapter
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_petdoc.R
+import com.example.project_petdoc.RecordActivity2
 import com.example.project_petdoc.databinding.ActivityMedicalBinding
 import com.example.project_petdoc.dataclass.Medical
 
@@ -33,11 +38,18 @@ class MedicalActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         // View Binding 설정
         binding = ActivityMedicalBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         // Sample data 생성
         medicalList = mutableListOf(
