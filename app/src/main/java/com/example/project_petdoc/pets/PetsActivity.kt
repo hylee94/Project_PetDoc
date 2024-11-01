@@ -63,18 +63,30 @@ class PetsActivity : AppCompatActivity() {
 
     // 등록된 데이터를 받아서 RecyclerView에 추가하는 launcher 설정
     private val registerActivityResultLauncher =
+//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+//            if (result.resultCode == RESULT_OK && result.data != null) {
+//                result.data!!.let { data ->
+//                    val type = data.getStringExtra("type")
+//                val name = data.getStringExtra("name")
+//                val gender = data.getStringExtra("gender")
+//                val age = data.getIntExtra("age", 0)
+//                val hospital = data.getStringExtra("hospital")
+//                petList.add(Pet(0, Member("id", "email", "password"), type, name, gender, age, hospital))
+//                petAdapter.notifyDataSetChanged()
+//                }
+//            }
+//        }
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
                 result.data!!.let { data ->
-//                    val id = Member(id = )
-//                    val type = data.getStringExtra("type")
-//                    val name = data.getStringExtra("name")
-//                    val gender = data.getStringExtra("gender")
-//                    val age = data.getStringExtra("age")
-//                    val hospital = data.getStringExtra("hospital")
-//                    val member = Member(id.toString(),email, password)
-//                    petList.add(Pet(0,,type, name, gender, age, hospital))
-//                    petAdapter.notifyDataSetChanged()
+                    val type = data.getStringExtra("type") ?: "" // 기본값을 빈 문자열로 설정
+                    val name = data.getStringExtra("name") ?: "" // 기본값을 빈 문자열로 설정
+                    val gender = data.getStringExtra("gender") ?: "" // 기본값을 빈 문자열로 설정
+                    val age = data.getIntExtra("age", 0) // 기본값을 0으로 설정
+                    val hospital = data.getStringExtra("hospital") ?: "" // 기본값을 빈 문자열로 설정
+
+                    petList.add(Pet(0, Member("id", "email", "password"), type, name, gender, age, hospital))
+                    petAdapter.notifyDataSetChanged()
                 }
             }
         }
