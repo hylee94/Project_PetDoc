@@ -45,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             val id = binding.editId.text.toString()
             val password = binding.editPw.text.toString()
 
+
             if (id.isNotBlank() && password.isNotBlank()) {
                 val member = Member(id = id, email = "", password = password)
 
