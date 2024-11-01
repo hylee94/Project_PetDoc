@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.project_petdoc.databinding.ItemMedicalBinding
 import com.example.project_petdoc.dataclass.Medical
-import com.example.teamproject.RecordActivity2
+import com.example.project_petdoc.RecordActivity2
 
 class MedicalAdapter(
     private val medicalList: List<Medical>,

@@ -9,77 +9,56 @@
 
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="100dp"
-        app:layout_constraintEnd_toStartOf="@+id/textView"
+        android:id="@+id/btnRecordBack"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/back" />
+
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="52dp"
         android:text="진료기록"
-        android:textSize="25dp"
+        android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:cardCornerRadius="75dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <ImageView
-            android:id="@+id/userImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/user_basic" />
-    </androidx.cardview.widget.CardView>
-
-
     <EditText
         android:id="@+id/edtDate"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="날짜"
         android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:hint="날짜"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/edtDisease"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="질환"
         android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:hint="질환"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtDate" />
@@ -89,7 +68,7 @@
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
         android:background="@drawable/rounded_edit_text"
         android:ems="10"
@@ -102,14 +81,14 @@
     <EditText
         android:id="@+id/edtPrescription"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="처방"
         android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:hint="처방"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtOpinion" />
@@ -121,10 +100,10 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="병원비"
         android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:hint="병원비"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtPrescription" />
@@ -134,12 +113,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="병원명"
         android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:hint="병원명"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtFee" />
@@ -147,14 +126,14 @@
     <EditText
         android:id="@+id/edtMemo"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="text"
-        android:hint="메모"
         android:background="@drawable/rounded_edit_text"
+        android:ems="10"
+        android:hint="메모"
+        android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edtHospital" />
@@ -163,13 +142,17 @@
         android:id="@+id/btnSave"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="39dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="#9771ff"
         android:text="등록하기"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtMemo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

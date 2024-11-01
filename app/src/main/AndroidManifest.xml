@@ -23,7 +23,7 @@
             <!--            </intent-filter>-->
         </activity>
         <activity
-            android:name="com.example.teamproject.RecordActivity2"
+            android:name=".RecordActivity2"
             android:exported="true"
             tools:ignore="DuplicateActivity">
             <intent-filter>
