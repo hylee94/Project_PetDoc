@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project_petdoc.Member.MainActivity
 import com.example.project_petdoc.client.MemberClient
-import com.example.project_petdoc.client.MemberClient
 import com.example.project_petdoc.databinding.DialogProfileBinding
 import com.example.project_petdoc.dataclass.Member
 import com.example.project_petdoc.pets.PetsActivity
@@ -32,6 +31,10 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         shared = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
 
+        val userId = shared.getString("userId", null)
+
+        val textViewUserid = findViewById<TextView>(R.id.textView4)
+        textViewUserid.text = userId
       //  val backButton = findViewById<ImageView>(R.id.backButton)
         val editPersonalInfoButton = findViewById<Button>(R.id.editPersonalInfoButton)
         val managePetButton = findViewById<Button>(R.id.managePetButton)
