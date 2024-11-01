@@ -56,6 +56,9 @@ class MainActivity : AppCompatActivity() {
                             // 로그인 상태 저장
                             saveLoginStatus(true)
 
+                            //로그인한 사용자 ID 저장
+                            val userId = response.body()?.id //서버에서 받은 사용자 ID 가져오기
+
                             // 다음 화면으로 이동하는 코드 추가
                             val intent = Intent(this@MainActivity, PetsActivity::class.java)
                             startActivity(intent)

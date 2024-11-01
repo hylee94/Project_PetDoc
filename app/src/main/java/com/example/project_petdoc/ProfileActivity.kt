@@ -2,6 +2,7 @@ package com.example.project_petdoc
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
@@ -11,16 +12,22 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.project_petdoc.client.MemberClient
 import com.example.project_petdoc.databinding.DialogProfileBinding
 import com.example.project_petdoc.pets.PetsActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileActivity : AppCompatActivity() {
+    private lateinit var shared : SharedPreferences
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
+        shared = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
 
       //  val backButton = findViewById<ImageView>(R.id.backButton)
         val editPersonalInfoButton = findViewById<Button>(R.id.editPersonalInfoButton)
@@ -39,7 +46,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         deleteAccountButton.setOnClickListener {
-            Toast.makeText(this, "Delete Account", Toast.LENGTH_SHORT).show()
+            showDeleteConfirmationDialog()
         }
 
         btnProfileBack.setOnClickListener {
@@ -78,5 +85,41 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         alertDialog.show()
+    }
+    private fun showDeleteConfirmationDialog(){
+        val userId = shared.getString("userId", null) //사용자 ID 가져오기
+
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setTitle("회원 탈퇴")
+            .setMessage("정말로 탈퇴하시겠습니까?")
+            .setPositiveButton("확인"){_, _ ->
+                if (userId != null){
+                    MemberClient.retrofit.delete(userId).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@ProfileActivity, "회원탈퇴 성공", Toast.LENGTH_SHORT).show()
+                                finish()
+                            } else {
+                                Toast.makeText(this@ProfileActivity, "회원탈퇴 실패: ${response.message()}" , Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Toast.makeText(this@ProfileActivity, "오류 발생: ${t.message}", Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+                }else {
+                    Toast.makeText(this@ProfileActivity, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+            .setNegativeButton("취소", null)
+
+        dialogBuilder
+            .create()
+            .show()
     }
 }
