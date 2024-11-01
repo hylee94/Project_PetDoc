@@ -26,4 +26,9 @@ interface MemberInterface {
     //삭제
     @DELETE("delete/{id}")
     fun delete(@Path("id") id:String):Call<Void>
+
+    //로그인
+    @POST("login")
+    fun login(@Body member: Member): Call<Member>
+
 }

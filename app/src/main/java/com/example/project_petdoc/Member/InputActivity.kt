@@ -47,8 +47,6 @@ class InputActivity : AppCompatActivity() {
         }
 
 
-
-
     }
 
     // 회원가입 메서드
