@@ -48,9 +48,15 @@ class ProfileActivity : AppCompatActivity() {
     }
 
     private fun showEditPersonalInfoDialog() {
-        // 다이얼로그를 위한 레이아웃 인플레이트
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_profile, null)
         val binding = DialogProfileBinding.bind(dialogView)
+
+        val sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
+        val userId = sharedPreferences.getString("userId", "")
+        val userEmail = sharedPreferences.getString("userEmail", "")
+
+        binding.editEmail.setText(userEmail)
+        binding.editId.setText(userId)
 
         // AlertDialog 생성
         val dialogBuilder = AlertDialog.Builder(this)
@@ -60,12 +66,17 @@ class ProfileActivity : AppCompatActivity() {
 
         // "수정" 버튼 클릭 리스너
         binding.saveButton.setOnClickListener {
+            val id = binding.editId.text.toString()
             val email = binding.editEmail.text.toString()
-            val password = binding.editPassword.text.toString()
+            val newPassword = binding.editPassword.text.toString()
 
-            // 이메일과 비밀번호 처리 로직 추가
-            if (email.isNotBlank() && password.isNotBlank()) {
-                Toast.makeText(this, "이메일: $email\n비밀번호: $password", Toast.LENGTH_SHORT).show()
+            if (email.isNotBlank() && newPassword.isNotBlank()) {
+                val editor = sharedPreferences.edit()
+                editor.putString("userEmail", email)
+                editor.putString("userPassword", newPassword) // 비밀번호도 저장
+                editor.apply()
+
+                Toast.makeText(this, "개인 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
                 alertDialog.dismiss()
             } else {
                 Toast.makeText(this, "모든 필드를 입력해 주세요", Toast.LENGTH_SHORT).show()
@@ -79,4 +90,5 @@ class ProfileActivity : AppCompatActivity() {
 
         alertDialog.show()
     }
+
 }
