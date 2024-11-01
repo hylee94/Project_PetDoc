@@ -3,7 +3,6 @@ package com.example.project_petdoc.Member
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.preference.PreferenceManager
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -44,7 +43,6 @@ class MainActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             val id = binding.editId.text.toString()
             val password = binding.editPw.text.toString()
-
 
             if (id.isNotBlank() && password.isNotBlank()) {
                 val member = Member(id = id, email = "", password = password)
@@ -94,5 +92,4 @@ class MainActivity : AppCompatActivity() {
         editor.putString("userPassword", password)
         editor.apply()
     }
-
 }
