@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Project_PetDoc"
         tools:targetApi="31">
         <activity
-            android:name="com.example.teamproject.RecordActivity"
+            android:name="com.example.project_petdoc.RecordActivity"
             android:exported="true">
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.teamproject.MedicalActivity"
+            android:name="com.example.project_petdoc.MedicalActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

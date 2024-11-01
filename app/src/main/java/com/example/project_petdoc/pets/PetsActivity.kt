@@ -65,13 +65,14 @@ class PetsActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
                 result.data!!.let { data ->
+                    val petid = data.getIntExtra("petid",0)
                     val type = data.getStringExtra("type")
                     val name = data.getStringExtra("name")
                     val gender = data.getStringExtra("gender")
                     val age = data.getStringExtra("age")
                     val hospital = data.getStringExtra("hospital")
 
-                    petList.add(Pet(type, name, gender, age, hospital))
+                    petList.add(Pet(petid,type.toString(), name.toString(), gender.toString(), age.toString(), hospital.toString()))
                     petAdapter.notifyDataSetChanged()
                 }
             }
