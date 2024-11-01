@@ -60,9 +60,15 @@ class RegisterActivity : AppCompatActivity() {
                 binding.editAge.error = "나이를 올바르게 입력해주세요"
                 return@setOnClickListener
             }
+            val sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
+            val userId = sharedPreferences.getString("userId", null) ?: "기본값"
+            val email = sharedPreferences.getString("email", null) ?: "기본값"
+            val password = sharedPreferences.getString("password", null) ?: "기본값"
+
+
             val pet = Pet(
                 0,
-                Member("hy","hy","hy"),
+                Member(userId, email, password),
                 binding.editType.text.toString(),
                 binding.editName.text.toString(),
                 binding.editS.text.toString(),

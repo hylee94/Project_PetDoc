@@ -63,19 +63,6 @@ class PetsActivity : AppCompatActivity() {
 
     // 등록된 데이터를 받아서 RecyclerView에 추가하는 launcher 설정
     private val registerActivityResultLauncher =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if (result.resultCode == RESULT_OK && result.data != null) {
-//                result.data!!.let { data ->
-//                    val type = data.getStringExtra("type")
-//                val name = data.getStringExtra("name")
-//                val gender = data.getStringExtra("gender")
-//                val age = data.getIntExtra("age", 0)
-//                val hospital = data.getStringExtra("hospital")
-//                petList.add(Pet(0, Member("id", "email", "password"), type, name, gender, age, hospital))
-//                petAdapter.notifyDataSetChanged()
-//                }
-//            }
-//        }
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
                 result.data!!.let { data ->
