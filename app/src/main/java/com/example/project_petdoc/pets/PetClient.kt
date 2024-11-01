@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object PetClient {
     val retrofit : PetInterface = Retrofit.Builder()
-        .baseUrl("http://10.100.103.43:8899/pet/")
+        .baseUrl("http://10.100.103.31:8899/pet/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(PetInterface::class.java)
