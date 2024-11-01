@@ -30,5 +30,4 @@ interface MemberInterface {
     //로그인
     @POST("login")
     fun login(@Body member: Member): Call<Member>
-
 }

@@ -81,4 +81,5 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean("isLoggedIn", isLoggedIn)
         editor.apply()
     }
+
 }
