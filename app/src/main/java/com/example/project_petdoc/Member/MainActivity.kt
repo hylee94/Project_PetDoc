@@ -92,5 +92,4 @@ class MainActivity : AppCompatActivity() {
         editor.putString("userPassword", password)
         editor.apply()
     }
-
 }
