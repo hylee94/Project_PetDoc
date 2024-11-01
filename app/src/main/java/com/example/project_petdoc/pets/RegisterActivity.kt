@@ -2,8 +2,12 @@ package com.example.project_petdoc.pets
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.project_petdoc.R
 import com.example.project_petdoc.databinding.PetsSumBinding
 
 class RegisterActivity : AppCompatActivity() {
@@ -11,20 +15,31 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         // Inflate the binding and set the content view
         binding = PetsSumBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+
+        binding.petback.setOnClickListener {
+            finish()
+        }
 
         // 등록 버튼 클릭 시 데이터 전송
         binding.btnSign.setOnClickListener {
-            val category = binding.editCategory.text.toString().trim()
+            val type = binding.editType.text.toString().trim()
             val name = binding.editName.text.toString().trim()
             val gender = binding.editS.text.toString().trim()
             val age = binding.editAge.text.toString().trim()
             val hospital = binding.editHos.text.toString().trim()
 
-            if (category.isEmpty()) {
-                binding.editCategory.error = "동물 종류를 입력해주세요"
+            if (type.isEmpty()) {
+                binding.editType.error = "종을 입력해주세요"
             } else if (name.isEmpty()) {
                 binding.editName.error = "이름을 입력해주세요"
             } else if (gender.isEmpty()) {
@@ -39,7 +54,7 @@ class RegisterActivity : AppCompatActivity() {
                 binding.editHos.error = "종 구분 입력해주세요"
             } else {
                 val intent = Intent().apply {
-                    putExtra("category", category)
+                    putExtra("type", type)
                     putExtra("name", name)
                     putExtra("gender", gender)
                     putExtra("age", age)

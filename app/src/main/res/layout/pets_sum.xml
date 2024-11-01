@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,25 +10,47 @@
         android:id="@+id/Pets_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
         android:text="Pets"
-        android:textSize="30sp"
+        android:textSize="35sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+
+    <ImageView
+        android:id="@+id/petback"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back" />
+
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/animalday"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editCategory"
+        android:id="@+id/editType"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="52dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/edittext_border"
         android:ems="10"
-        android:hint="ex)강아지, 고양이, 악어..."
+        android:hint="강아지, 고양이 등 카테고리를 입력해 주세요"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Pets_title" />
 
@@ -40,11 +63,11 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/edittext_border"
         android:ems="10"
-        android:hint="이름"
+        android:hint="반려동물의 이름을 작성해 주세요"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editCategory" />
+        app:layout_constraintTop_toBottomOf="@+id/editType" />
 
     <EditText
         android:id="@+id/editS"
@@ -55,7 +78,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/edittext_border"
         android:ems="10"
-        android:hint="남 or 여 만 입력해주세요"
+        android:hint="성별을 입력해 주세요 (남, 여로만 가능)"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +93,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/edittext_border"
         android:ems="10"
-        android:hint="나이 ex) 5살"
+        android:hint="반려동물의 나이는 N살로 입력해 주세요"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +108,7 @@
         android:layout_marginEnd="32dp"
         android:background="@drawable/edittext_border"
         android:ems="10"
-        android:hint="ex) 핏불, 아프리카코끼리, 러시안블루..."
+        android:hint="반려동물의 종을 입력해 주세요 (말티즈 등)"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -104,35 +127,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editHos" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
-        app:cardCornerRadius="75dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints">
-
-        <ImageView
-            android:id="@+id/userImage"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/user_basic" />
-    </androidx.cardview.widget.CardView>
-
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

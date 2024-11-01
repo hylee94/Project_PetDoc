@@ -1,43 +1,57 @@
 package com.example.project_petdoc
 
+import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.project_petdoc.Member.MainActivity
+import com.example.project_petdoc.client.MemberClient
 import com.example.project_petdoc.databinding.DialogProfileBinding
+import com.example.project_petdoc.pets.PetsActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileActivity : AppCompatActivity() {
+    private lateinit var shared : SharedPreferences
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         setContentView(R.layout.activity_profile)
+        shared = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
 
       //  val backButton = findViewById<ImageView>(R.id.backButton)
         val editPersonalInfoButton = findViewById<Button>(R.id.editPersonalInfoButton)
         val managePetButton = findViewById<Button>(R.id.managePetButton)
-        val deleteAccountTextView = findViewById<TextView>(R.id.deleteAccountTextView)
+        val deleteAccountButton = findViewById<TextView>(R.id.deleteAccountButton)
+        val btnProfileBack = findViewById<ImageView>(R.id.btnProfileBack)
 
-//        // 백 버튼 클릭 시 현재 액티비티 종료
-//        backButton.setOnClickListener {
-//            finish() // 현재 액티비티 종료하고 이전 화면으로 돌아감
-//        }
 
         editPersonalInfoButton.setOnClickListener {
             showEditPersonalInfoDialog()
         }
 
         managePetButton.setOnClickListener {
-            Toast.makeText(this, "Manage Pets", Toast.LENGTH_SHORT).show()
-            // Navigate to com.example.project_petdoc.dataclass.Pet Management screen
+            val intent = Intent(this, PetsActivity::class.java)
+            startActivity(intent)
         }
 
-        deleteAccountTextView.setOnClickListener {
-            Toast.makeText(this, "Delete Account", Toast.LENGTH_SHORT).show()
-            // Implement account deletion functionality here
+        deleteAccountButton.setOnClickListener {
+            showDeleteConfirmationDialog()
+        }
+
+        btnProfileBack.setOnClickListener {
+            finish()
         }
     }
 
@@ -45,6 +59,13 @@ class ProfileActivity : AppCompatActivity() {
         // 다이얼로그를 위한 레이아웃 인플레이트
         val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_profile, null)
         val binding = DialogProfileBinding.bind(dialogView)
+
+        val sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
+        val userId = sharedPreferences.getString("userId", "")
+        val userEmail = sharedPreferences.getString("userEmail", "")
+
+        binding.editEmail.setText(userEmail)
+        binding.editId.setText(userId)
 
         // AlertDialog 생성
         val dialogBuilder = AlertDialog.Builder(this)
@@ -54,12 +75,17 @@ class ProfileActivity : AppCompatActivity() {
 
         // "수정" 버튼 클릭 리스너
         binding.saveButton.setOnClickListener {
+            val id = binding.editId.text.toString()
             val email = binding.editEmail.text.toString()
-            val password = binding.editPassword.text.toString()
+            val newPassword = binding.editPassword.text.toString()
 
-            // 이메일과 비밀번호 처리 로직 추가
-            if (email.isNotBlank() && password.isNotBlank()) {
-                Toast.makeText(this, "이메일: $email\n비밀번호: $password", Toast.LENGTH_SHORT).show()
+            if (email.isNotBlank() && newPassword.isNotBlank()) {
+                val editor = sharedPreferences.edit()
+                editor.putString("userEmail", email)
+                editor.putString("userPassword", newPassword) // 비밀번호도 저장
+                editor.apply()
+
+                Toast.makeText(this, "개인 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
                 alertDialog.dismiss()
             } else {
                 Toast.makeText(this, "모든 필드를 입력해 주세요", Toast.LENGTH_SHORT).show()
@@ -72,5 +98,42 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         alertDialog.show()
+    }
+    private fun showDeleteConfirmationDialog(){
+        val userId = shared.getString("userId", null) //사용자 ID 가져오기
+
+        val dialogBuilder = AlertDialog.Builder(this)
+            .setTitle("회원 탈퇴")
+            .setMessage("정말로 탈퇴하시겠습니까?")
+            .setPositiveButton("확인"){_, _ ->
+                if (userId != null){
+                    MemberClient.retrofit.delete(userId).enqueue(object : Callback<Void> {
+                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                            if (response.isSuccessful) {
+                                Toast.makeText(this@ProfileActivity, "회원탈퇴 성공", Toast.LENGTH_SHORT).show()
+                                val intent = Intent(this@ProfileActivity, MainActivity::class.java)
+                                startActivity(intent)
+                            } else {
+                                Toast.makeText(this@ProfileActivity, "회원탈퇴 실패: ${response.message()}" , Toast.LENGTH_SHORT).show()
+                            }
+                        }
+
+
+
+                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                            Toast.makeText(this@ProfileActivity, "오류 발생: ${t.message}", Toast.LENGTH_SHORT).show()
+                        }
+
+                    })
+                }else {
+                    Toast.makeText(this@ProfileActivity, "사용자 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
+                }
+
+            }
+            .setNegativeButton("취소", null)
+
+        dialogBuilder
+            .create()
+            .show()
     }
 }

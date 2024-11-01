@@ -2,12 +2,17 @@ package com.example.project_petdoc.pets
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_petdoc.Member.MainActivity
+import com.example.project_petdoc.ProfileActivity
+import com.example.project_petdoc.R
 import com.example.project_petdoc.databinding.PetsListBinding
 import com.example.project_petdoc.dataclass.Pet
 
@@ -29,6 +34,21 @@ class PetsActivity : AppCompatActivity() {
             insets
         }
 
+        val btnProfile = findViewById<ImageView>(R.id.btnProfile)
+        btnProfile.setOnClickListener {
+            val intent = Intent(this, ProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        val btnLogout = findViewById<Button>(R.id.btnLogout)
+
+        btnLogout.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
+
         // RecyclerView 초기화
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = petAdapter
@@ -38,11 +58,6 @@ class PetsActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             registerActivityResultLauncher.launch(intent)
         }
-
-        // 메인 화면으로 돌아가는 ImageView 클릭 시 액션
-        binding.imageView2.setOnClickListener {
-
-        }
     }
 
     // 등록된 데이터를 받아서 RecyclerView에 추가하는 launcher 설정
@@ -50,18 +65,15 @@ class PetsActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
                 result.data!!.let { data ->
-                    val category = data.getStringExtra("category")
+                    val type = data.getStringExtra("type")
                     val name = data.getStringExtra("name")
                     val gender = data.getStringExtra("gender")
                     val age = data.getStringExtra("age")
                     val hospital = data.getStringExtra("hospital")
 
-                    petList.add(Pet(category, name, gender, age, hospital))
+                    petList.add(Pet(type, name, gender, age, hospital))
                     petAdapter.notifyDataSetChanged()
                 }
             }
         }
-
-
-
 }
