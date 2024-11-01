@@ -13,7 +13,7 @@ class PetAdapter(private val petList: List<Pet>) : RecyclerView.Adapter<PetAdapt
             binding.textViewType.text = pet.type
             binding.textViewName.text = pet.name
             binding.textViewGender.text = pet.gender
-            binding.textViewAge.text = pet.age
+            binding.textViewAge.text = pet.age.toString()
             binding.textViewHospital.text = pet.hospital
         }
     }
