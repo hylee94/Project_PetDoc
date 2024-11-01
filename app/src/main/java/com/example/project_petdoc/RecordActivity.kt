@@ -2,9 +2,13 @@ package com.example.teamproject
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.example.project_petdoc.R
 import com.example.project_petdoc.databinding.ActivityRecordBinding
 
 class RecordActivity : AppCompatActivity() {
@@ -18,6 +22,16 @@ class RecordActivity : AppCompatActivity() {
         binding = ActivityRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
         enableEdgeToEdge()
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        val btnRecordBack = findViewById<ImageView>(R.id.btnRecordBack)
+        btnRecordBack.setOnClickListener {
+            finish()
+        }
 
         // 저장 버튼 클릭 리스너 설정
         binding.btnSave.setOnClickListener {
