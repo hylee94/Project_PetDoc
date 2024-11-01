@@ -17,7 +17,6 @@ interface PetInterface {
     @POST("insert")
     fun save(@Body pet: Pet): Call<Pet>
 
-
     // 수정
     @PUT("update/{petid}")
     fun update(@Path("petid") id:String, @Body pet: Pet): Call<Pet>

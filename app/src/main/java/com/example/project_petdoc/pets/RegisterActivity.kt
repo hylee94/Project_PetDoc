@@ -66,7 +66,6 @@ class RegisterActivity : AppCompatActivity() {
             val password = sharedPreferences.getString("password", null) ?: "기본값"
 
 
-
             val pet = Pet(
                 0,
                 Member(userId, email, password),

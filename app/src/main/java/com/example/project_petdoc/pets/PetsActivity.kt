@@ -61,7 +61,6 @@ class PetsActivity : AppCompatActivity() {
         }
     }
 
-
     // 등록된 데이터를 받아서 RecyclerView에 추가하는 launcher 설정
     private val registerActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
