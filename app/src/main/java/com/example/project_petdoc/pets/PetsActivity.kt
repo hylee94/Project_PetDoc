@@ -14,6 +14,7 @@ import com.example.project_petdoc.Member.MainActivity
 import com.example.project_petdoc.ProfileActivity
 import com.example.project_petdoc.R
 import com.example.project_petdoc.databinding.PetsListBinding
+import com.example.project_petdoc.dataclass.Member
 import com.example.project_petdoc.dataclass.Pet
 
 
@@ -65,14 +66,15 @@ class PetsActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
                 result.data!!.let { data ->
-                    val type = data.getStringExtra("type")
-                    val name = data.getStringExtra("name")
-                    val gender = data.getStringExtra("gender")
-                    val age = data.getStringExtra("age")
-                    val hospital = data.getStringExtra("hospital")
-
-                    petList.add(Pet(type, name, gender, age, hospital))
-                    petAdapter.notifyDataSetChanged()
+//                    val id = Member(id = )
+//                    val type = data.getStringExtra("type")
+//                    val name = data.getStringExtra("name")
+//                    val gender = data.getStringExtra("gender")
+//                    val age = data.getStringExtra("age")
+//                    val hospital = data.getStringExtra("hospital")
+//                    val member = Member(id.toString(),email, password)
+//                    petList.add(Pet(0,,type, name, gender, age, hospital))
+//                    petAdapter.notifyDataSetChanged()
                 }
             }
         }
