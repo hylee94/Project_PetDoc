@@ -59,3 +59,4 @@ class PetAdapter(
         notifyItemRemoved(position) // UI 업데이트
     }
 }
+
