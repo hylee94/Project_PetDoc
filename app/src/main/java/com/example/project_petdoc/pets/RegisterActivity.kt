@@ -91,10 +91,10 @@ class RegisterActivity : AppCompatActivity() {
                         setResult(RESULT_OK, intent)
                         finish()
 
-                        response.body()?.let { petInfo ->
-                            saveUserCredentials(petInfo.petid, petInfo.memberid, petInfo.type,
-                                petInfo.name,petInfo.gender,petInfo.age,petInfo.hospital)
-                        }
+//                        response.body()?.let { petInfo ->
+//                            saveUserCredentials(petInfo.petid, petInfo.memberid, petInfo.type,
+//                                petInfo.name,petInfo.gender,petInfo.age,petInfo.hospital)
+//                        }
                     }
                     else {
                         // 서버 응답 실패
@@ -122,16 +122,16 @@ class RegisterActivity : AppCompatActivity() {
             })
         }
     }
-    private fun saveUserCredentials(petid: Int, memberid: Member, type: String, name:String,
-                                    gender:String, age:Int, hospital:String) {
-        val editor = sharedPreferences.edit()
-        editor.putInt("petid", petid)
-        editor.putString("memberid", memberid.toString())
-        editor.putString("type", type)
-        editor.putString("name", name)
-        editor.putString("gender", gender)
-        editor.putInt("age", age)
-        editor.putString("hospital", hospital)
-        editor.apply()
-    }
+//    private fun saveUserCredentials(petid: Int, memberid: Member, type: String, name:String,
+//                                    gender:String, age:Int, hospital:String) {
+//        val editor = sharedPreferences.edit()
+//        editor.putInt("petid", petid)
+//        editor.putString("memberid", memberid.toString())
+//        editor.putString("type", type)
+//        editor.putString("name", name)
+//        editor.putString("gender", gender)
+//        editor.putInt("age", age)
+//        editor.putString("hospital", hospital)
+//        editor.apply()
+//    }
 }
