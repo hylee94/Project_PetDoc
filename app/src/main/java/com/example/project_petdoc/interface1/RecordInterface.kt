@@ -23,8 +23,8 @@ interface RecordInterface {
 
 
     // Record 삭제 (예시, 필요한 경우 추가)
-    @DELETE("delete/{recordId}")
-    fun deleteRecord(@Path("recordId") recordId: Long): Call<Void>
+    @DELETE("delete/{no}")
+    fun deleteRecord(@Path("no") recordId: Long): Call<Void>
 
     // Record 업데이트 (예시, 필요한 경우 추가)
     @PUT("update")
