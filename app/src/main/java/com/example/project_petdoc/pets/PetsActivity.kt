@@ -138,8 +138,72 @@ class PetsActivity : AppCompatActivity() {
 //
 //        })
 
+
+        // 애완동물 목록 가져오기
+//        loadPets()
+
+        petAdapter.setOnItemEditClickListener { pet ->
+            val intent = Intent(this, RegisterActivity::class.java).apply {
+                putExtra("petId", pet.petid)
+                putExtra("type", pet.type)
+                putExtra("name", pet.name)
+                putExtra("gender", pet.gender)
+                putExtra("age", pet.age)
+                putExtra("hospital", pet.hospital)
+            }
+            editActivityResultLauncher.launch(intent)
+        }
     }
 
+//    private fun loadPets() {
+//        PetClient.retrofit.findAll().enqueue(object : retrofit2.Callback<List<Pet>> {
+//            override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
+//                if (response.isSuccessful) {
+//                    response.body()?.let {
+//                        petList.clear() // 기존 리스트 클리어
+//                        petList.addAll(it) // 새 리스트 추가
+//                        petAdapter.notifyDataSetChanged() // 어댑터 갱신
+//                    }
+//                } else {
+//                    // 서버에서 에러 발생 시 처리
+//                    showErrorDialog("Failed to load pets.")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<List<Pet>>, t: Throwable) {
+//                // 네트워크 실패 처리
+//                showErrorDialog("Network error: ${t.message}")
+//            }
+//        })
+//
+//    }
+    //RegisterActivity에서 수정된 데이터를 받아와 반영하는 launcher 설정
+    private val editActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
+                val userId = sharedPreferences.getString("userId", null) ?: "기본값"
+                val email = sharedPreferences.getString("email", null) ?: "기본값"
+                val password = sharedPreferences.getString("password", null) ?: "기본값"
+
+                val petId = result.data!!.getIntExtra("petId", -1)
+                val updatePet = Pet (
+                    petId,
+                    //현재 로그인된 멤버 정보를 사용하여 객체 생성
+                    Member(userId, email, password),
+                    result.data!!.getStringExtra("type") ?: "",
+                    result.data!!.getStringExtra("name") ?: "",
+                    result.data!!.getStringExtra("gender") ?: "",
+                    result.data!!.getIntExtra("age", 0),
+                    result.data!!.getStringExtra("hospital") ?: ""
+                )
+                val index = petList.indexOfFirst { it.petid == petId }
+                if (index != -1) {
+                    petList[index] = updatePet
+                    petAdapter.notifyItemChanged(index)
+                }
+            }
+        }
 
     private val registerActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
