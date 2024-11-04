@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.project_petdoc.databinding.ItemPetBinding
 import com.example.project_petdoc.dataclass.Pet
 
-class PetAdapter(private val petList: List<Pet>) : RecyclerView.Adapter<PetAdapter.PetViewHolder>() {
+class PetAdapter(var petList: List<Pet>) : RecyclerView.Adapter<PetAdapter.PetViewHolder>() {
 
     inner class PetViewHolder(private val binding: ItemPetBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(pet: Pet) {
