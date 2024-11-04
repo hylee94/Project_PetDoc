@@ -31,16 +31,22 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
         shared = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
 
+        val textViewUserid = findViewById<TextView>(R.id.textView4)
+
+        // 사용자 ID 가져오기
         val userId = shared.getString("userId", null)
 
-        val textViewUserid = findViewById<TextView>(R.id.textView4)
-        textViewUserid.text = userId
-      //  val backButton = findViewById<ImageView>(R.id.backButton)
+        // 사용자 ID가 null이 아닐 경우, 환영 메시지 설정
+        if (userId != null) {
+            textViewUserid.text = "$userId 님 환영합니다"
+        } else {
+            textViewUserid.text = "사용자 ID를 찾을 수 없습니다."
+        }
+
         val editPersonalInfoButton = findViewById<Button>(R.id.editPersonalInfoButton)
         val managePetButton = findViewById<Button>(R.id.managePetButton)
         val deleteAccountButton = findViewById<TextView>(R.id.deleteAccountButton)
         val btnProfileBack = findViewById<ImageView>(R.id.btnProfileBack)
-
 
         editPersonalInfoButton.setOnClickListener {
             showEditPersonalInfoDialog()
