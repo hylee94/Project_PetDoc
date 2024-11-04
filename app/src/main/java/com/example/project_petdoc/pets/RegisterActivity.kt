@@ -1,5 +1,6 @@
 package com.example.project_petdoc.pets
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
@@ -14,6 +15,7 @@ import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: PetsSumBinding
+    private lateinit var sharedPreferences : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +64,7 @@ class RegisterActivity : AppCompatActivity() {
                 binding.editAge.error = "나이를 올바르게 입력해주세요"
                 return@setOnClickListener
             }
-            val sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
+            sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
             val userId = sharedPreferences.getString("userId", null) ?: "기본값"
             val email = sharedPreferences.getString("email", null) ?: "기본값"
             val password = sharedPreferences.getString("password", null) ?: "기본값"
@@ -88,6 +90,11 @@ class RegisterActivity : AppCompatActivity() {
                         intent.putExtra("hospital", response.body()!!.hospital)
                         setResult(RESULT_OK, intent)
                         finish()
+
+                        response.body()?.let { petInfo ->
+                            saveUserCredentials(petInfo.petid, petInfo.memberid, petInfo.type,
+                                petInfo.name,petInfo.gender,petInfo.age,petInfo.hospital)
+                        }
                     }
                     else {
                         // 서버 응답 실패
@@ -114,5 +121,17 @@ class RegisterActivity : AppCompatActivity() {
 
             })
         }
+    }
+    private fun saveUserCredentials(petid: Int, memberid: Member, type: String, name:String,
+                                    gender:String, age:Int, hospital:String) {
+        val editor = sharedPreferences.edit()
+        editor.putInt("petid", petid)
+        editor.putString("memberid", memberid.toString())
+        editor.putString("type", type)
+        editor.putString("name", name)
+        editor.putString("gender", gender)
+        editor.putInt("age", age)
+        editor.putString("hospital", hospital)
+        editor.apply()
     }
 }
