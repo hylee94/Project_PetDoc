@@ -1,36 +1,47 @@
-package com.example.teamproject
+package com.example.project_petdoc
 
-import MedicalAdapter
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.project_petdoc.R
-import com.example.project_petdoc.RecordActivity2
 import com.example.project_petdoc.databinding.ActivityMedicalBinding
-import com.example.project_petdoc.dataclass.Medical
+import com.example.project_petdoc.dataclass.Record
+import com.example.project_petdoc.client.RecordClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MedicalActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMedicalBinding
-    private lateinit var medicalList: MutableList<Medical> // 리스트를 변경 가능한 MutableList로 선언
+    private lateinit var medicalList: MutableList<Record> // 리스트를 변경 가능한 MutableList로 선언
     private lateinit var medicalAdapter: MedicalAdapter
 
     // ActivityResultLauncher 등록
     private val recordActivityLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
+                // 새로운 데이터가 추가되었으므로 리스트를 다시 불러오거나 Intent로 전달된 데이터를 추가
                 val date = result.data?.getStringExtra("date")
                 val disease = result.data?.getStringExtra("disease")
                 val opinion = result.data?.getStringExtra("opinion")
 
-                if (date != null && disease != null && opinion != null) {
-                    val newRecord = Medical(disease, date, opinion)
+                if (!date.isNullOrEmpty() && !disease.isNullOrEmpty() && !opinion.isNullOrEmpty()) {
+                    // 새로운 Record 객체 생성 및 추가
+                    val newRecord = Record(
+                        no = 0,
+                        pet = null,  // Pet 객체는 필요하지 않으므로 null 설정
+                        date = date,
+                        disease = disease,
+                        doctor_op = opinion,
+                        medicine = "",
+                        fee = "",
+                        hospital = "",
+                        memo = ""
+                    )
                     medicalList.add(newRecord)
                     medicalAdapter.notifyItemInserted(medicalList.size - 1)
                 }
@@ -38,34 +49,23 @@ class MedicalActivity : AppCompatActivity() {
         }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
-
         // View Binding 설정
         binding = ActivityMedicalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
-        // Sample data 생성
-        medicalList = mutableListOf(
-            Medical("감기", "2024-10-29", "기침 및 목 아픔"),
-            Medical("독감", "2024-11-05", "열과 두통 증상"),
-            Medical("알레르기", "2024-11-10", "재채기 및 콧물")
-        )
-
         // RecyclerView 설정
-        medicalAdapter = MedicalAdapter(medicalList) { selectedMedical ->
-            // 항목 클릭 시 상세보기 화면으로 이동
+        medicalList = mutableListOf()
+        medicalAdapter = MedicalAdapter(medicalList) { selectedRecord ->
+            // 항목 클릭 시 Record2Activity로 이동
             val intent = Intent(this, RecordActivity2::class.java).apply {
-                putExtra("date", selectedMedical.date)
-                putExtra("disease", selectedMedical.disease)
-                putExtra("opinion", selectedMedical.doctor_op)
-                // 필요시 Record2Activity에 추가적인 정보 전달
+                putExtra("date", selectedRecord.date)
+                putExtra("disease", selectedRecord.disease)
+                putExtra("opinion", selectedRecord.doctor_op)
+                putExtra("prescription", selectedRecord.medicine)
+                putExtra("fee", selectedRecord.fee)
+                putExtra("hospital", selectedRecord.hospital)
+                putExtra("memo", selectedRecord.memo)
             }
             startActivity(intent)
         }
@@ -76,8 +76,30 @@ class MedicalActivity : AppCompatActivity() {
         // 추가하기 버튼을 클릭하면 RecordActivity로 이동
         binding.btnAdd.setOnClickListener {
             val intent = Intent(this, RecordActivity::class.java)
-            recordActivityLauncher.launch(intent) // ActivityResultLauncher로 RecordActivity 시작
+            recordActivityLauncher.launch(intent)
         }
+
+        // 서버에서 데이터 가져오기
+        fetchMedicalRecords()
+    }
+
+    // 서버에서 데이터 가져와 리사이클러뷰 업데이트
+    private fun fetchMedicalRecords() {
+        RecordClient.retrofit.getRecords().enqueue(object : Callback<List<Record>> {
+            override fun onResponse(call: Call<List<Record>>, response: Response<List<Record>>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { records ->
+                        medicalList.clear()
+                        medicalList.addAll(records)
+                        medicalAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+                // 서버 오류 처리
+                Log.e("MedicalActivity", "서버 연결 실패: ${t.message}")
+            }
+        })
     }
 }
-

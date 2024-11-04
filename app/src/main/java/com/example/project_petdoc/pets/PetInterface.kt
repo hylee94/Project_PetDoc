@@ -24,4 +24,5 @@ interface PetInterface {
     // 삭제
     @DELETE("delete/{petid}")
     fun deleteById(@Path("petid") id:String): Call<Void>
+
 }
