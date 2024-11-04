@@ -11,6 +11,7 @@ class PetAdapter(
     var petList: MutableList<Pet>,
     private val itemClick: (Pet) -> Unit // 클릭 리스너 매개변수 추가
 ) : RecyclerView.Adapter<PetAdapter.PetViewHolder>() {
+    private var onItemEditClickListener: ((Pet) -> Unit)? = null
 
     var onDeleteClick: ((Int) -> Unit)? = null
 
@@ -21,6 +22,10 @@ class PetAdapter(
             binding.textViewGender.text = pet.gender
             binding.textViewAge.text = pet.age.toString()
             binding.textViewHospital.text = pet.hospital
+
+            binding.buttonEdit.setOnClickListener {
+                onItemEditClickListener?.invoke(pet)
+            }
 
             // 삭제 버튼 클릭 이벤트 설정
             binding.buttonDelete.setOnClickListener {
@@ -45,8 +50,13 @@ class PetAdapter(
 
     override fun getItemCount(): Int = petList.size
 
+    fun setOnItemEditClickListener(listener: (Pet) -> Unit) {
+        onItemEditClickListener = listener
+    }
+
     fun removeAt(position: Int) {
         petList.removeAt(position) // 아이템 삭제
         notifyItemRemoved(position) // UI 업데이트
     }
 }
+

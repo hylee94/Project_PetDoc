@@ -1,8 +1,10 @@
 package com.example.project_petdoc.pets
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project_petdoc.databinding.PetsSumBinding
@@ -22,6 +24,11 @@ class RegisterActivity : AppCompatActivity() {
         enableEdgeToEdge()
         binding = PetsSumBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
+        val userId = sharedPreferences.getString("userId", null) ?: "기본값"
+        val email = sharedPreferences.getString("email", null) ?: "기본값"
+        val password = sharedPreferences.getString("password", null) ?: "기본값"
 
         binding.petback.setOnClickListener {
             finish()
@@ -64,10 +71,6 @@ class RegisterActivity : AppCompatActivity() {
                 binding.editAge.error = "나이를 올바르게 입력해주세요"
                 return@setOnClickListener
             }
-            sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
-            val userId = sharedPreferences.getString("userId", null) ?: "기본값"
-            val email = sharedPreferences.getString("email", null) ?: "기본값"
-            val password = sharedPreferences.getString("password", null) ?: "기본값"
 
 
             val pet = Pet(
@@ -120,6 +123,66 @@ class RegisterActivity : AppCompatActivity() {
                 }
 
             })
+        }
+        // Intent에서 기존 Pet 데이터를 받아와 초기화
+        val petId = intent.getIntExtra("petId", -1)
+        if (petId != -1) {
+            binding.editType.setText(intent.getStringExtra("type"))
+            binding.editName.setText(intent.getStringExtra("name"))
+            binding.editS.setText(intent.getStringExtra("gender"))
+            binding.editAge.setText(intent.getIntExtra("age", 0).toString())
+            binding.editHos.setText(intent.getStringExtra("hospital"))
+        }
+        binding.btnSign.text = "수정" //수정 버튼 텍스트 설정
+        binding.btnSign.setOnClickListener{
+            val updatedPet = Pet(
+                petId,
+                // 현재 로그인된 멤버 정보를 사용하여 객체 생성
+                Member(userId, email, password),
+                binding.editType.text.toString(),
+                binding.editName.text.toString(),
+                binding.editS.text.toString(),
+                binding.editAge.text.toString().toInt(),
+                binding.editHos.text.toString()
+            )
+            // Retrofit을 통해 서버에 수정 요청
+            PetClient.retrofit.update(petId.toString(), updatedPet).enqueue(object : Callback<Pet>{
+                override fun onResponse(call: Call<Pet>, response: Response<Pet>) {
+                    if (response.isSuccessful) {
+                        // 수정이 성공적으로 완료되면 결과를 전달하고 액티비티 종료
+                        val resultIntent = Intent().apply {
+                            putExtra("petId", petId)
+                            putExtra("type", updatedPet.type)
+                            putExtra("name", updatedPet.name)
+                            putExtra("gender", updatedPet.gender)
+                            putExtra("age", updatedPet.age)
+                            putExtra("hospital", updatedPet.hospital)
+                        }
+                        setResult(RESULT_OK, resultIntent)
+                        finish()
+                    }else {
+                        //오류 처리
+                        Toast.makeText(this@RegisterActivity, "수정 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Pet>, t: Throwable) {
+                    // 통신 실패 처리
+                    Toast.makeText(this@RegisterActivity, "서버와의 연결 실패", Toast.LENGTH_SHORT).show()
+                }
+
+            })
+            // 수정된 데이터를 Intent에 담아 전달
+            val resultIntent = Intent().apply {
+                putExtra("petId", petId)
+                putExtra("type", binding.editType.text.toString())
+                putExtra("name", binding.editName.text.toString())
+                putExtra("gender", binding.editS.text.toString())
+                putExtra("age", binding.editAge.text.toString().toInt())
+                putExtra("hospital", binding.editHos.text.toString())
+            }
+            setResult(RESULT_OK, resultIntent)
+            finish()
         }
     }
 //    private fun saveUserCredentials(petid: Int, memberid: Member, type: String, name:String,
