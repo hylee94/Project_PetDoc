@@ -1,6 +1,5 @@
 package com.example.project_petdoc
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,13 +8,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.project_petdoc.databinding.ActivityMedicalBinding
-import com.example.project_petdoc.dataclass.Medical
 import com.example.project_petdoc.dataclass.Record
 import com.example.project_petdoc.client.RecordClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-
 
 class MedicalActivity : AppCompatActivity() {
 
@@ -24,24 +21,30 @@ class MedicalActivity : AppCompatActivity() {
     private lateinit var medicalAdapter: MedicalAdapter
 
     // ActivityResultLauncher 등록
-//    private val recordActivityLauncher: ActivityResultLauncher<Intent> =
-//        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-//            if (result.resultCode == RESULT_OK) {
-//                val date = result.data?.getStringExtra("date")
-//                val disease = result.data?.getStringExtra("disease")
-//                val opinion = result.data?.getStringExtra("opinion")
-//
-//                if (date != null && disease != null && opinion != null) {
-//                    val newRecord = Medical(disease, date, opinion)
-//                    medicalList.add(newRecord)
-//                    medicalAdapter.notifyItemInserted(medicalList.size - 1)
-//                }
-//            }
-//        }
     private val recordActivityLauncher: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
-                fetchMedicalRecords() // 새로운 데이터가 추가되었으므로 리스트를 다시 불러옴
+                // 새로운 데이터가 추가되었으므로 리스트를 다시 불러오거나 Intent로 전달된 데이터를 추가
+                val date = result.data?.getStringExtra("date")
+                val disease = result.data?.getStringExtra("disease")
+                val opinion = result.data?.getStringExtra("opinion")
+
+                if (!date.isNullOrEmpty() && !disease.isNullOrEmpty() && !opinion.isNullOrEmpty()) {
+                    // 새로운 Record 객체 생성 및 추가
+                    val newRecord = Record(
+                        no = 0,
+                        pet = null,  // Pet 객체는 필요하지 않으므로 null 설정
+                        date = date,
+                        disease = disease,
+                        doctor_op = opinion,
+                        medicine = "",
+                        fee = "",
+                        hospital = "",
+                        memo = ""
+                    )
+                    medicalList.add(newRecord)
+                    medicalAdapter.notifyItemInserted(medicalList.size - 1)
+                }
             }
         }
 
@@ -95,14 +98,8 @@ class MedicalActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<List<Record>>, t: Throwable) {
                 // 서버 오류 처리
-                // 예를 들어, Log 메시지 출력 또는 사용자에게 알림 표시
                 Log.e("MedicalActivity", "서버 연결 실패: ${t.message}")
             }
         })
-        // 추가하기 버튼을 클릭하면 RecordActivity로 이동
-        binding.btnAdd.setOnClickListener {
-            val intent = Intent(this, RecordActivity::class.java)
-            recordActivityLauncher.launch(intent) // ActivityResultLauncher로 RecordActivity 시작
-        }
     }
 }
