@@ -10,8 +10,13 @@ import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface PetInterface {
+
     @GET("list")
     fun findAll(): Call<List<Pet>>
+
+// 특정 사용자 ID를 기반으로 펫 목록을 가져오기 위한 메서드 추가
+    @GET("list/{id}")
+    fun findByMemberid_Id(@Path("id") id: String): Call<List<Pet>>
 
     // 추가
     @POST("insert")
@@ -24,4 +29,5 @@ interface PetInterface {
     // 삭제
     @DELETE("delete/{petid}")
     fun deleteById(@Path("petid") id:String): Call<Void>
+
 }
