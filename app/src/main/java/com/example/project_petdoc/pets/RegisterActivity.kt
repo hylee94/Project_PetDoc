@@ -2,6 +2,7 @@ package com.example.project_petdoc.pets
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project_petdoc.databinding.PetsSumBinding
 import androidx.appcompat.app.AlertDialog
@@ -16,6 +17,7 @@ class RegisterActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = PetsSumBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
