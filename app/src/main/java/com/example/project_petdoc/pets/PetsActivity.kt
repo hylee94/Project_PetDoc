@@ -140,29 +140,7 @@ class PetsActivity : AppCompatActivity() {
 
 
         // 애완동물 목록 가져오기
-        loadPets()
-    }
-
-    private fun loadPets() {
-        PetClient.retrofit.findAll().enqueue(object : retrofit2.Callback<List<Pet>> {
-            override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        petList.clear() // 기존 리스트 클리어
-                        petList.addAll(it) // 새 리스트 추가
-                        petAdapter.notifyDataSetChanged() // 어댑터 갱신
-                    }
-                } else {
-                    // 서버에서 에러 발생 시 처리
-                    showErrorDialog("Failed to load pets.")
-                }
-            }
-
-            override fun onFailure(call: Call<List<Pet>>, t: Throwable) {
-                // 네트워크 실패 처리
-                showErrorDialog("Network error: ${t.message}")
-            }
-        })
+//        loadPets()
 
         petAdapter.setOnItemEditClickListener { pet ->
             val intent = Intent(this, RegisterActivity::class.java).apply {
@@ -176,6 +154,29 @@ class PetsActivity : AppCompatActivity() {
             editActivityResultLauncher.launch(intent)
         }
     }
+
+//    private fun loadPets() {
+//        PetClient.retrofit.findAll().enqueue(object : retrofit2.Callback<List<Pet>> {
+//            override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
+//                if (response.isSuccessful) {
+//                    response.body()?.let {
+//                        petList.clear() // 기존 리스트 클리어
+//                        petList.addAll(it) // 새 리스트 추가
+//                        petAdapter.notifyDataSetChanged() // 어댑터 갱신
+//                    }
+//                } else {
+//                    // 서버에서 에러 발생 시 처리
+//                    showErrorDialog("Failed to load pets.")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<List<Pet>>, t: Throwable) {
+//                // 네트워크 실패 처리
+//                showErrorDialog("Network error: ${t.message}")
+//            }
+//        })
+//
+//    }
     //RegisterActivity에서 수정된 데이터를 받아와 반영하는 launcher 설정
     private val editActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->

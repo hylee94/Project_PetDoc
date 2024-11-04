@@ -184,7 +184,6 @@ class RegisterActivity : AppCompatActivity() {
             setResult(RESULT_OK, resultIntent)
             finish()
         }
-
     }
 //    private fun saveUserCredentials(petid: Int, memberid: Member, type: String, name:String,
 //                                    gender:String, age:Int, hospital:String) {
