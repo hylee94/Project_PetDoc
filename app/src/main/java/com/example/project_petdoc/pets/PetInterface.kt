@@ -19,9 +19,10 @@ interface PetInterface {
 
     // 수정
     @PUT("update/{petid}")
-    fun updatePet(@Path("id") petId: Int, @Body pet: Pet): Call<Void>
+    fun update(@Path("petid") id:String, @Body pet: Pet): Call<Pet>
 
     // 삭제
     @DELETE("delete/{petid}")
-    fun deleteById(@Path("petid") id: String): Call<Void>
+    fun deleteById(@Path("petid") id:String): Call<Void>
+
 }

@@ -8,12 +8,12 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Project_PetDoc"
-        android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
             android:name=".pets.PetsEditActivity"
@@ -22,15 +22,13 @@
             android:name=".EditPetActivity"
             android:exported="false" />
         <activity
-            android:name="com.example.teamproject.RecordActivity"
+            android:name="com.example.project_petdoc.RecordActivity"
             android:exported="true">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
 
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".RecordActivity2"
@@ -43,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.teamproject.MedicalActivity"
+            android:name="com.example.project_petdoc.MedicalActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -51,6 +49,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".Record2"
             android:exported="false" />
@@ -71,7 +70,6 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -93,7 +91,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pets.RegisterActivity" />
+        <activity android:name=".pets.RegisterActivity"/>
     </application>
 
 </manifest>
