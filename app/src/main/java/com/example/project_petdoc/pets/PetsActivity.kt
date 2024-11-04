@@ -1,7 +1,9 @@
 package com.example.project_petdoc.pets
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
@@ -11,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.project_petdoc.MedicalActivity
 import com.example.project_petdoc.Member.MainActivity
 import com.example.project_petdoc.ProfileActivity
 import com.example.project_petdoc.R
@@ -24,8 +27,15 @@ import retrofit2.Response
 class PetsActivity : AppCompatActivity() {
     val binding by lazy { PetsListBinding.inflate(layoutInflater) }
     val petList = ArrayList<Pet>()
-    val petAdapter = PetAdapter(petList)
     private lateinit var sharedPreferences: SharedPreferences
+    private val petAdapter = PetAdapter(petList) { selectedPet ->
+        // 클릭 시 MedicalActivity로 이동
+        val intent = Intent(this, MedicalActivity::class.java).apply {
+            putExtra("petId", selectedPet.petid)
+            putExtra("petName", selectedPet.name)
+        }
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
