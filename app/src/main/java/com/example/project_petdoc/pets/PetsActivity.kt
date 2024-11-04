@@ -1,11 +1,14 @@
 package com.example.project_petdoc.pets
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -24,6 +27,7 @@ class PetsActivity : AppCompatActivity() {
     val binding by lazy { PetsListBinding.inflate(layoutInflater) }
     val petList = ArrayList<Pet>()
     val petAdapter = PetAdapter(petList)
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,53 @@ class PetsActivity : AppCompatActivity() {
             finish()
         }
 
+        sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
+        val userId = sharedPreferences.getString("userId", null)
+        if (userId != null) {
+            Log.d("PetsActivity", "Retrieved userId: $userId")
+        } else {
+            Log.d("PetsActivity", "userId not found in SharedPreferences")
+        }
+
+        if (userId != null) {
+            // 로그인된 사용자의 ID로 펫 목록 요청
+            PetClient.retrofit.findByMemberid_Id(userId).enqueue(object : retrofit2.Callback<List<Pet>> {
+                override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
+                    if (response.isSuccessful && response.body() != null) {
+                        Log.d("PetsActivity", "Server response: ${response.body()}")
+                        petList.clear()
+                        petList.addAll(response.body()!!)
+                        petAdapter.notifyDataSetChanged()
+                    } else {
+                        Log.d("PetsActivity", "Server response code: ${response.code()}")
+                        Log.d("PetsActivity", "Response body: ${response.errorBody()?.string()}")
+                        petList.clear()
+                        petAdapter.notifyDataSetChanged()
+                    }
+                }
+
+                override fun onFailure(call: Call<List<Pet>>, t: Throwable) {
+                    Log.e("PetsActivity", "Failed to load pet list: ${t.message}")
+                    AlertDialog.Builder(this@PetsActivity)
+                        .setTitle("오류")
+                        .setMessage("펫 목록을 불러오는 데 실패했습니다: ${t.message}")
+                        .setPositiveButton("확인", null)
+                        .show()
+                }
+            })
+        } else {
+            AlertDialog.Builder(this@PetsActivity)
+                .setTitle("로그인 필요")
+                .setMessage("로그인된 사용자가 없습니다. 다시 로그인해주세요.")
+                .setPositiveButton("확인") { _, _ ->
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }
+                .setCancelable(false)
+                .show()
+        }
+
         // RecyclerView 초기화
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = petAdapter
@@ -61,17 +112,18 @@ class PetsActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             registerActivityResultLauncher.launch(intent)
         }
-        PetClient.retrofit.findAll().enqueue(object : retrofit2.Callback<List<Pet>>{
-            override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
-                petAdapter.petList =response.body() as MutableList<Pet>
-                petAdapter.notifyDataSetChanged()
-            }
+//        PetClient.retrofit.findAll().enqueue(object : retrofit2.Callback<List<Pet>>{
+//            override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
+//                petAdapter.petList =response.body() as MutableList<Pet>
+//                petAdapter.notifyDataSetChanged()
+//            }
+//
+//            override fun onFailure(call: Call<List<Pet>>, t: Throwable) {
+//
+//            }
+//
+//        })
 
-            override fun onFailure(call: Call<List<Pet>>, t: Throwable) {
-
-            }
-
-        })
     }
 
     // 등록된 데이터를 받아서 RecyclerView에 추가하는 launcher 설정
