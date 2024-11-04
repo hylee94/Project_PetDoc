@@ -7,6 +7,7 @@ import com.example.project_petdoc.databinding.ItemPetBinding
 import com.example.project_petdoc.dataclass.Pet
 
 class PetAdapter(var petList: List<Pet>) : RecyclerView.Adapter<PetAdapter.PetViewHolder>() {
+    private var onItemEditClickListener: ((Pet) -> Unit)? = null
 
     inner class PetViewHolder(private val binding: ItemPetBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(pet: Pet) {
@@ -15,6 +16,10 @@ class PetAdapter(var petList: List<Pet>) : RecyclerView.Adapter<PetAdapter.PetVi
             binding.textViewGender.text = pet.gender
             binding.textViewAge.text = pet.age.toString()
             binding.textViewHospital.text = pet.hospital
+
+            binding.buttonEdit.setOnClickListener {
+                onItemEditClickListener?.invoke(pet)
+            }
         }
     }
 
@@ -28,4 +33,8 @@ class PetAdapter(var petList: List<Pet>) : RecyclerView.Adapter<PetAdapter.PetVi
     }
 
     override fun getItemCount(): Int = petList.size
+
+    fun setOnItemEditClickListener(listener: (Pet) -> Unit) {
+        onItemEditClickListener = listener
+    }
 }

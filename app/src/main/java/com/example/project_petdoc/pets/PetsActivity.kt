@@ -1,6 +1,7 @@
 package com.example.project_petdoc.pets
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -24,6 +25,7 @@ class PetsActivity : AppCompatActivity() {
     val binding by lazy { PetsListBinding.inflate(layoutInflater) }
     val petList = ArrayList<Pet>()
     val petAdapter = PetAdapter(petList)
+    private lateinit var sharedPreferences : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,7 @@ class PetsActivity : AppCompatActivity() {
             val intent = Intent(this, RegisterActivity::class.java)
             registerActivityResultLauncher.launch(intent)
         }
+
         PetClient.retrofit.findAll().enqueue(object : retrofit2.Callback<List<Pet>>{
             override fun onResponse(call: Call<List<Pet>>, response: Response<List<Pet>>) {
                 petAdapter.petList =response.body() as MutableList<Pet>
@@ -72,7 +75,46 @@ class PetsActivity : AppCompatActivity() {
             }
 
         })
+
+        petAdapter.setOnItemEditClickListener { pet ->
+            val intent = Intent(this, RegisterActivity::class.java).apply {
+                putExtra("petId", pet.petid)
+                putExtra("type", pet.type)
+                putExtra("name", pet.name)
+                putExtra("gender", pet.gender)
+                putExtra("age", pet.age)
+                putExtra("hospital", pet.hospital)
+            }
+            editActivityResultLauncher.launch(intent)
+        }
     }
+    //RegisterActivity에서 수정된 데이터를 받아와 반영하는 launcher 설정
+    private val editActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
+                val userId = sharedPreferences.getString("userId", null) ?: "기본값"
+                val email = sharedPreferences.getString("email", null) ?: "기본값"
+                val password = sharedPreferences.getString("password", null) ?: "기본값"
+
+                val petId = result.data!!.getIntExtra("petId", -1)
+                val updatePet = Pet (
+                    petId,
+                    //현재 로그인된 멤버 정보를 사용하여 객체 생성
+                    Member(userId, email, password),
+                    result.data!!.getStringExtra("type") ?: "",
+                    result.data!!.getStringExtra("name") ?: "",
+                    result.data!!.getStringExtra("gender") ?: "",
+                    result.data!!.getIntExtra("age", 0),
+                    result.data!!.getStringExtra("hospital") ?: ""
+                )
+                val index = petList.indexOfFirst { it.petid == petId }
+                if (index != -1) {
+                    petList[index] = updatePet
+                    petAdapter.notifyItemChanged(index)
+                }
+            }
+        }
 
     // 등록된 데이터를 받아서 RecyclerView에 추가하는 launcher 설정
     private val registerActivityResultLauncher =
