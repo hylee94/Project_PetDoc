@@ -12,13 +12,17 @@ import retrofit2.http.Path
 interface PetInterface {
     @GET("list")
     fun findAll(): Call<List<Pet>>
+
     // 추가
     @POST("insert")
     fun save(@Body pet: Pet): Call<Pet>
+
     // 수정
-    @PUT("update/{memberid}")
-    fun update(@Path("memberid") id:Long, @Body pet: Pet): Call<Pet>
+    @PUT("update/{petid}")
+    fun update(@Path("petid") id:String, @Body pet: Pet): Call<Pet>
+
     // 삭제
-    @DELETE("delete/{memberid}")
-    fun deleteById(@Path("memberid") id:Long): Call<Void>
+    @DELETE("delete/{petid}")
+    fun deleteById(@Path("petid") id:String): Call<Void>
+
 }
