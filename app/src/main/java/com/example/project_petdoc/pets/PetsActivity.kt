@@ -17,13 +17,21 @@ import com.example.project_petdoc.R
 import com.example.project_petdoc.databinding.PetsListBinding
 import com.example.project_petdoc.dataclass.Member
 import com.example.project_petdoc.dataclass.Pet
+import com.example.project_petdoc.MedicalActivity
 import retrofit2.Call
 import retrofit2.Response
 
 class PetsActivity : AppCompatActivity() {
     private val binding by lazy { PetsListBinding.inflate(layoutInflater) }
     private val petList = ArrayList<Pet>()
-    private val petAdapter = PetAdapter(petList)
+    private val petAdapter = PetAdapter(petList) { selectedPet ->
+        // 클릭 시 MedicalActivity로 이동
+        val intent = Intent(this, MedicalActivity::class.java).apply {
+            putExtra("petId", selectedPet.petid)
+            putExtra("petName", selectedPet.name)
+        }
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +48,7 @@ class PetsActivity : AppCompatActivity() {
         // 프로필 버튼 클릭 리스너
         val btnProfile = findViewById<ImageView>(R.id.btnProfile)
         btnProfile.setOnClickListener {
-            val intent = Intent(this, ProfileActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, ProfileActivity::class.java))
         }
 
         // 로그아웃 버튼 클릭 리스너
@@ -66,8 +73,7 @@ class PetsActivity : AppCompatActivity() {
 
         // "추가하기" 버튼 클릭 시 RegisterActivity로 이동
         binding.btnSign.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
-            registerActivityResultLauncher.launch(intent)
+            registerActivityResultLauncher.launch(Intent(this, RegisterActivity::class.java))
         }
 
         // 애완동물 목록 가져오기
@@ -99,7 +105,7 @@ class PetsActivity : AppCompatActivity() {
     private val registerActivityResultLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK && result.data != null) {
-                result.data!!.let { data ->
+                result.data?.let { data ->
                     val type = data.getStringExtra("type") ?: ""
                     val name = data.getStringExtra("name") ?: ""
                     val gender = data.getStringExtra("gender") ?: ""
@@ -120,9 +126,7 @@ class PetsActivity : AppCompatActivity() {
                 val petId = petList[position].petid // 삭제할 애완동물 ID 가져오기
                 deletePet(petId, position) // 삭제 메서드 호출
             }
-            .setNegativeButton("아니요") { dialog, _ ->
-                dialog.dismiss()
-            }
+            .setNegativeButton("아니요") { dialog, _ -> dialog.dismiss() }
         val alert = dialogBuilder.create()
         alert.show()
     }

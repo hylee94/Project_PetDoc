@@ -1,7 +1,5 @@
 package com.example.project_petdoc.interface1
 
-
-import com.example.project_petdoc.dataclass.Pet
 import com.example.project_petdoc.dataclass.Record
 import retrofit2.Call
 import retrofit2.http.Body
@@ -14,20 +12,20 @@ import retrofit2.http.Path
 interface RecordInterface {
     @GET("list")
     fun getRecords(): Call<List<Record>>
+
     // Record 추가
     @POST("insert")
     fun saveRecord(@Body record: Record): Call<Record>
 
+    // 특정 반려동물의 진료 기록 가져오기
+    @GET("list/pet/{petId}")
+    fun getRecordsForPet(@Path("petId") petId: String): Call<List<Record>>
 
-//    // petId로 Pet 가져오기
-//    @GET("get/{petid}") // 서버의 실제 경로로 수정 필요
-//    fun getPetById(@Path("petid") petId: Int): Call<Pet>
+    // Record 삭제 (예시, 필요한 경우 추가)
+    @DELETE("delete/{recordId}")
+    fun deleteRecord(@Path("recordId") recordId: Long): Call<Void>
 
-//    // 수정
-//    @PUT("update/{memberid}")
-//    fun update(@Path("memberid") id:Long, @Body pet: Pet): Call<Pet>
-//    // 삭제
-//    @DELETE("delete/{memberid}")
-//    fun deleteById(@Path("memberid") id:Long): Call<Void>
-
+    // Record 업데이트 (예시, 필요한 경우 추가)
+    @PUT("update")
+    fun updateRecord(@Body record: Record): Call<Record>
 }

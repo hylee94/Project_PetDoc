@@ -44,6 +44,9 @@ class MedicalActivity : AppCompatActivity() {
                     )
                     medicalList.add(newRecord)
                     medicalAdapter.notifyItemInserted(medicalList.size - 1)
+                } else {
+                    // 데이터가 유효하지 않을 경우 사용자에게 알림
+                    showError("데이터가 유효하지 않습니다.")
                 }
             }
         }
@@ -55,9 +58,23 @@ class MedicalActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // RecyclerView 설정
+        setupRecyclerView()
+
+        // 추가하기 버튼 클릭 시 RecordActivity로 이동
+        binding.btnAdd.setOnClickListener {
+            val intent = Intent(this, RecordActivity::class.java)
+            recordActivityLauncher.launch(intent)
+        }
+
+        // 서버에서 데이터 가져오기
+        fetchMedicalRecords()
+    }
+
+    // RecyclerView 설정 메소드
+    private fun setupRecyclerView() {
         medicalList = mutableListOf()
         medicalAdapter = MedicalAdapter(medicalList) { selectedRecord ->
-            // 항목 클릭 시 Record2Activity로 이동
+            // 항목 클릭 시 RecordActivity2로 이동
             val intent = Intent(this, RecordActivity2::class.java).apply {
                 putExtra("date", selectedRecord.date)
                 putExtra("disease", selectedRecord.disease)
@@ -72,18 +89,9 @@ class MedicalActivity : AppCompatActivity() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = medicalAdapter
-
-        // 추가하기 버튼을 클릭하면 RecordActivity로 이동
-        binding.btnAdd.setOnClickListener {
-            val intent = Intent(this, RecordActivity::class.java)
-            recordActivityLauncher.launch(intent)
-        }
-
-        // 서버에서 데이터 가져오기
-        fetchMedicalRecords()
     }
 
-    // 서버에서 데이터 가져와 리사이클러뷰 업데이트
+    // 서버에서 데이터 가져와 RecyclerView 업데이트
     private fun fetchMedicalRecords() {
         RecordClient.retrofit.getRecords().enqueue(object : Callback<List<Record>> {
             override fun onResponse(call: Call<List<Record>>, response: Response<List<Record>>) {
@@ -92,14 +100,26 @@ class MedicalActivity : AppCompatActivity() {
                         medicalList.clear()
                         medicalList.addAll(records)
                         medicalAdapter.notifyDataSetChanged()
+                    } ?: run {
+                        showError("의료 기록을 불러오는 데 실패했습니다.")
                     }
+                } else {
+                    showError("서버 오류: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<List<Record>>, t: Throwable) {
                 // 서버 오류 처리
                 Log.e("MedicalActivity", "서버 연결 실패: ${t.message}")
+                showError("네트워크 오류: ${t.message}")
             }
         })
+    }
+
+    // 사용자에게 오류 메시지 표시
+    private fun showError(message: String) {
+        // 여기에서 Toast나 Snackbar 등을 사용하여 사용자에게 메시지를 보여줄 수 있습니다.
+        Log.e("MedicalActivity", message) // 로그에 에러 메시지 출력
+        // 예: Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
