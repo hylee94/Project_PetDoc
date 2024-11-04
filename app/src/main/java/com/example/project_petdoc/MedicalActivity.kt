@@ -3,6 +3,7 @@ package com.example.project_petdoc
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -33,7 +34,7 @@ class MedicalActivity : AppCompatActivity() {
                     // 새로운 Record 객체 생성 및 추가
                     val newRecord = Record(
                         no = 0,
-                        pet = null,  // Pet 객체는 필요하지 않으므로 null 설정
+                        petid = null,  // Pet 객체는 필요하지 않으므로 null 설정
                         date = date,
                         disease = disease,
                         doctor_op = opinion,
@@ -54,6 +55,7 @@ class MedicalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // View Binding 설정
+        enableEdgeToEdge()
         binding = ActivityMedicalBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -62,8 +64,16 @@ class MedicalActivity : AppCompatActivity() {
 
         // 추가하기 버튼 클릭 시 RecordActivity로 이동
         binding.btnAdd.setOnClickListener {
+            Log.d("aaa : ",intent.getIntExtra("petId",0).toString())//intent.getIntExtra("petId",0)
+            val id = intent.getIntExtra("petId",0)
             val intent = Intent(this, RecordActivity::class.java)
+            intent.putExtra("petId",id)
+
             recordActivityLauncher.launch(intent)
+        }
+
+        binding.btnMedicalback.setOnClickListener {
+            finish()
         }
 
         // 서버에서 데이터 가져오기

@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object RecordClient {
 
     val retrofit: RecordInterface = Retrofit.Builder()
-        .baseUrl("http://10.100.103.38:8899/record/")
+        .baseUrl("http://10.100.103.41:8899/record/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(RecordInterface::class.java)

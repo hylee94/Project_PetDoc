@@ -4,8 +4,10 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,12 +24,19 @@ class RecordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRecordBinding
     private lateinit var sharedPreferences: SharedPreferences
+    private var petId: Int? = null // petId 변수 추가
 
     @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
         binding = ActivityRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Intent에서 petId 값을 받아옴
+        petId = intent.getIntExtra("petId", -1) // 기본값으로 -1 사용
+
+        Log.d("petId ", petId.toString())
 
         sharedPreferences = getSharedPreferences("MyAppPreferences", MODE_PRIVATE)
 
@@ -63,19 +72,20 @@ class RecordActivity : AppCompatActivity() {
 
         // Pet 객체 생성 시 member를 전달
         val pet = Pet(
-            petid = 1,  // 실제 petId로 대체하세요
-            memberid = member,  // Member 객체를 전달
+            petid = petId ?: 0,  // petId가 null일 경우 기본값 0으로 대체
+            memberid = member,
             type = "type",
             name = "name",
             gender = "gender",
             age = 1,
             hospital = "hospital"
         )
+        Log.d("pet ", pet.petid.toString())
 
         // Record 객체 생성
         val record = Record(
             no = 0,
-            pet = pet,
+            petid = pet,
             date = binding.edtDate.text.toString(),
             disease = binding.edtDisease.text.toString(),
             doctor_op = binding.edtOpinion.text.toString(),
