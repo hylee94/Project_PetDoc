@@ -133,7 +133,6 @@ class RegisterActivity : AppCompatActivity() {
             binding.editAge.setText(intent.getIntExtra("age", 0).toString())
             binding.editHos.setText(intent.getStringExtra("hospital"))
         }
-        binding.btnSign.text = "수정" //수정 버튼 텍스트 설정
         binding.btnSign.setOnClickListener{
             val updatedPet = Pet(
                 petId,
