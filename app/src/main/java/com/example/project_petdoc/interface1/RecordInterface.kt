@@ -18,8 +18,9 @@ interface RecordInterface {
     fun saveRecord(@Body record: Record): Call<Record>
 
     // 특정 반려동물의 진료 기록 가져오기
-    @GET("list/pet/{petId}")
-    fun getRecordsForPet(@Path("petId") petId: String): Call<List<Record>>
+    @GET("/list/pet/{petId}")
+    fun getRecordsByPetId(@Path("petId") petId: Int): Call<List<Record>>
+
 
     // Record 삭제 (예시, 필요한 경우 추가)
     @DELETE("delete/{recordId}")
